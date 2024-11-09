@@ -79,25 +79,25 @@ end event
 
 event ObjectStartup
 	LoadSpriteSheet("Title/SonicTeam.gif")
-	LoadSpriteSheet("Title/Title.gif")
+	LoadSpriteSheet("Title/SonicTeamUSA.gif")
 	SetMusicTrack("Titlescreen_Alt.ogg", 0, false)
 
 	switch saved.language
-			default
-				SpriteFrame(-76, -24, 148, 40, 174, 259)
-				break
-			case 1 //PTBR
-				SpriteFrame(-76, -24, 148, 40, 174, 360)
-				break	
-			case 2 //SP
-				SpriteFrame(-76, -24, 148, 40, 174, 401)
-				break	
-			case 3 //FR
-				SpriteFrame(-76, -24, 148, 40, 323, 401)
-				break	
-			case 4 //GE
-				SpriteFrame(-80, -24, 160, 40, 323, 360)
-				break	
+	case 0
+		SpriteFrame(-76, -24, 148, 40, 1, 1)
+		break
+	case 1 //PTBR
+		SpriteFrame(-76, -24, 148, 40, 1, 42)
+		break	
+	case 2 //SP
+		SpriteFrame(-76, -24, 148, 40, 1, 83)
+		break	
+	case 3 //FR
+		SpriteFrame(-76, -24, 148, 40, 1, 124)
+		break	
+	case 4 //GE
+		SpriteFrame(-80, -24, 160, 40, 1, 165)
+		break	
 	end switch
 	SpriteFrame(-256, -128, 512, 256, 0, 0)
 end event
