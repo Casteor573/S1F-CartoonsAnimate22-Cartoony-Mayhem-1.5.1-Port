@@ -6003,7 +6003,8 @@ event ObjectDraw
 		temp2 -= scroll.current
 		temp1 = screen.xsize
 		temp1 -= 110
-		DrawRect(temp0, temp2, screen.xsize, 19, color5, color5, color7, 255)
+		
+		DrawRect(temp0, temp2, screen.xsize, 19, color5, color5, color7, 255)	
 		DrawRect(temp1, temp2, 110, 17, color6, color6, color6, 255) // light grey part
 
 	//Delete Highlight
@@ -6016,7 +6017,25 @@ event ObjectDraw
 
 		temp1 -= text.margin
 		temp1 ++
-		DrawRect(temp0, temp2, temp1, 17, color1, color1, color1, 255)
+		CheckEqual(object.state, ca22.menu)
+		temp4 = checkResult
+		CheckEqual(object.state, ca22.generalmenu)
+		temp4 |= checkResult
+		CheckEqual(object.state, ca22.supersonicmenu)
+		temp4 |= checkResult		
+		CheckEqual(object.state, ca22.tailsmenu)
+		temp4 |= checkResult
+		CheckEqual(object.state, ca22.knuxmenu)
+		temp4 |= checkResult
+		CheckEqual(object.state, ca22.amymenu)
+		temp4 |= checkResult
+		CheckEqual(menu.highlight, 1)
+		temp4 &= checkResult
+		if temp4 == 0
+			DrawRect(temp0, temp2, temp1, 17, color1, color1, color1, 255)
+		else	
+			DrawRect(temp0, temp2, screen.xsize, 17, color1, color1, color1, 255)
+		end if	
 		temp2++
 		temp0--
 		DrawRect(temp0, temp2, 1, 17, color5, color5, color7, 255)
