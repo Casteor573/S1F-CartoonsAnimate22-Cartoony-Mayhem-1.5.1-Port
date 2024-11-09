@@ -302,7 +302,13 @@ event ObjectMain
 	case 1
 		if object.value0 > 0
 			object.value0 -= 8
-		else
+		end if
+
+		if object.value0 == 120
+			PlaySfx(SfxName[Static], 0)
+		end if
+
+		if object.value0 <= 0
 			object.value2 = screen.xcenter
 			object.value2 -= 104
 			object.alpha = 128
@@ -336,7 +342,7 @@ event ObjectMain
 			object.state = 5
 		end if
 		if object.value0 == 2
-			PlaySfx(SfxName[Sega Chant], 0)
+			PlaySfx(SfxName[Wega], 0)
 		end if
 		if options.gameMode == 0
 			CallFunction(Sega_Function0)

@@ -69,4 +69,8 @@
 		<color bank="0" index="84" r="160" g="160" b="160"/>
 		<color bank="0" index="85" r="192" g="192" b="192"/>
 	</palette>
+
+  <sounds>
+    <soundfx name="Wega" path="Global/IntroSound.wav" />
+  </sounds>  
 </game>

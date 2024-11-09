@@ -20,9 +20,9 @@ event ObjectMain
 		if saveRAM[278] == 1
 			LoadSpriteSheet("Title/SonicTeam.gif")
 			else
-			rand(object.value1, 14)
+			rand(object.value1, 15)
 			//force a screen with this!
-			//object.value1 = 5
+			//object.value1 = 13
 		end if
 
 		if object.value1 == 2
@@ -177,8 +177,6 @@ event ObjectDraw
 		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
 
 		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-		DrawSpriteScreenXY(5, 179, 126) //tails				
-
 		
 		DrawSpriteScreenXY(24, screen.xcenter, screen.ycenter) //scared
 	
@@ -244,10 +242,10 @@ event ObjectDraw
 			
 
 		
-		DrawSpriteScreenXY(9, screen.xcenter, 110) //Sonic TUBERS ASIOGJLANKSLGL
+		DrawSpriteScreenXY(9, screen.xcenter, 120) //Sonic TUBERS ASIOGJLANKSLGL
 
-		DrawSpriteScreenXY(32, screen.xcenter, 110) //Amy Chase
-		DrawSpriteScreenXY(33, screen.xcenter, 100) //Amy Chase
+		DrawSpriteScreenXY(32, screen.xcenter, 120) //Amy Chase
+		DrawSpriteScreenXY(33, screen.xcenter, 120) //Amy Chase
 
 		break	
 		case 12	//bro think he gronic
@@ -276,7 +274,20 @@ event ObjectDraw
 
 		DrawSpriteScreenXY(37, screen.xcenter, 116) //sonis
 
-		break																
+		break	
+
+		case 14	//surfboard!! (gone wrong)
+
+		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
+
+		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
+			
+
+		
+		DrawSpriteScreenXY(38, screen.xcenter, 112) //knux fear
+
+		break		
+
 		end switch				
 	
 	else
@@ -374,6 +385,8 @@ event ObjectStartup
 	SpriteFrame(2, -24, 29, 37, 69, 347) //36 knux fear
 
 	SpriteFrame(-55, -50, 40, 45, 28, 347) //37 Sonis surf!
+
+	SpriteFrame(-30, -25, 56, 40, 155, 471) //38 gremlin
 
 end event
 
