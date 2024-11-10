@@ -79,6 +79,7 @@ function TailsObject_Function61
 	case 48		
 	case 63		
 	case 4
+	case 21
 	case 37
 		player.tailsFrame++
 		player.tailsFrame %= 40
@@ -300,6 +301,7 @@ event ObjectDraw
 		case 48		
 		case 63		
 		case 4
+		case 21
 		case 37
 			temp0 = player.tailsFrame
 			temp0 >>= 3
