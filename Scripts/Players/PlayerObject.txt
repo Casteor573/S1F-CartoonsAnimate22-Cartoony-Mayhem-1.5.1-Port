@@ -2861,13 +2861,13 @@ function PlayerObject_HandleGround
 					case 2
 						if player.isPlayer2 == 0
 							switch saved.KnuxVictoryAnim
-							case 1
-							object.animation = 65
-							CallFunction(PlayerObject_KnuxVictory)
-							break
-							default
-							object.animation = 64
-							break							
+								case 1
+									object.animation = 65
+									CallFunction(PlayerObject_KnuxVictory)
+								break
+								default
+									object.animation = 64
+								break							
 							end switch
 						else
 							object.animation = 46
@@ -2875,12 +2875,12 @@ function PlayerObject_HandleGround
 					break
 					case 5
 						switch saved.AmyVictoryAnim
-						default
-							object.animation = 63
-						break
 						case 1
 							object.animation = 64
 						break
+						default
+							object.animation = 63
+						break							
 						end switch
 					break						
 				end switch	

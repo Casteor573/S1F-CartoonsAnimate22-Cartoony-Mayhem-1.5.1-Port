@@ -106,7 +106,7 @@ function Player2Object_Function70
 			CallFunction(PlayerObject_StartKnuxGlide)
 		break	
 		case 2
-			CallFunction(PlayerObject_StartHammerSpin)
+			CallFunction(PlayerObject_StartHop)
 		break	
 		case 3
 			CallFunction(PlayerObject_HandleShieldAbilities)
@@ -414,13 +414,17 @@ function Player2Object_Function66
 	if object.ypos < player.targetLeaderPos.y
 		object.ypos += 0x10000
 		if saved.Player2Char != 0
-			object.yvel += 0x1000
+			if object.yvel <= 500000
+				object.yvel += 0x1000
+			end if
 		end if
 	end if
 	if object.ypos > player.targetLeaderPos.y
 		object.ypos -= 0x10000
 		if saved.Player2Char != 0
-			object.yvel -= 0x1000
+			if object.yvel >= 500000
+				object.yvel += 0x1000
+			end if
 		end if
 	end if
 	if object[0].type != TypeName[Death Event]
@@ -597,7 +601,6 @@ if saved.FallingSprites == 1
 	end if	
 end if	
 
-
 	CallFunction(Player2Object_Function68)
 	CallFunction(object.state)
 	ProcessAnimation()
@@ -748,15 +751,19 @@ event ObjectStartup
 	switch saved.Player2Char
 		case 1
 		LoadAnimation("AIKnuckles.ani")	//sorry
+		object[1].propertyValue = 2
 		break	
 		case 2
 		LoadAnimation("Amy.ani")	//sorry
+		object[1].propertyValue = 5
 		break
 		case 3
 		LoadAnimation("AISonic.ani")	//sorry
+		object[1].propertyValue = 0
 		break				
 		default
 		LoadAnimation("AITails.ani")	//sorry
+		object[1].propertyValue = 1
 		break
 	end switch	
 	//	LoadAnimation("Tails.ani")
@@ -780,7 +787,7 @@ event ObjectStartup
 
 
 		object[1].groupID = GROUP_PLAYERS
-		object[1].propertyValue = 1
+		
 		object[1].state = PlayerObject_HandleAir
 		object[1].priority = PRIORITY_ACTIVE
 		object[1].controlMode = 0
