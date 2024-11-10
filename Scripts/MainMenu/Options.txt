@@ -2390,9 +2390,9 @@ function ca22.amymenu
 			menu.highlight--
 			if menu.highlight < 0
 				if saved.mobile == 1
-					menu.highlight = 8
+					menu.highlight = 7
 				else
-					menu.highlight = 8
+					menu.highlight = 7
 				end if
 			end if
 		else	
