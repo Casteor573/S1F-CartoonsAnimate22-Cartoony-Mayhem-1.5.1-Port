@@ -355,7 +355,7 @@ event ObjectStartup
 	SpriteFrame(-70, -0, 28, 38, 355, 142) //20 Sonic Confusion
 	SpriteFrame(40, -0, 32, 31, 475, 131) //20 Rails
 
-	SpriteFrame(-116, -24, 300, 256, 212, 255)	// 22 color banner
+	SpriteFrame(-172, 24, 387, 199, 212, 237)	// 22 color banner
 
 	SpriteFrame(-35, -35, 63, 39, 448, 163) //23 movie	
 	SpriteFrame(-55, -35, 87, 48, 150, 188) //24 scare		
