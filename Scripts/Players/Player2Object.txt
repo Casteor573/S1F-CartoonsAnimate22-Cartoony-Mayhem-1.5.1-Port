@@ -108,6 +108,9 @@ function Player2Object_Function70
 		case 2
 			CallFunction(PlayerObject_StartHammerSpin)
 		break	
+		case 3
+			CallFunction(PlayerObject_HandleShieldAbilities)
+		break			
 		default
 			CallFunction(PlayerObject_StartTailsFlight)
 		break
@@ -576,6 +579,9 @@ if saved.FallingSprites == 1
 			case 2
 				object.animation = 47
 			break	
+			case 3
+				object.animation = 52
+			break			
 			default
 				object.animation = ANI_HURT
 			break		
@@ -734,11 +740,14 @@ event ObjectStartup
 
 	switch saved.Player2Char
 		case 1
-		LoadAnimation("Knuckles.ani")	//sorry
+		LoadAnimation("AIKnuckles.ani")	//sorry
 		break	
 		case 2
 		LoadAnimation("Amy.ani")	//sorry
-		break	
+		break
+		case 3
+		LoadAnimation("AISonic.ani")	//sorry
+		break				
 		default
 		LoadAnimation("AITails.ani")	//sorry
 		break

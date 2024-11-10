@@ -133,6 +133,10 @@ public alias saveRAM[1468] : saved.AmyActClearTheme
 
 public alias saveRAM[1469] : saved.Player2Char
 
+public alias saveRAM[1470] : saved.TailsPlayer2
+public alias saveRAM[1471] : saved.KnuxPlayer2
+public alias saveRAM[1472] : saved.AmyPlayer2
+
 private alias object.value0 : player.rings
 private alias object.value3 : player.drownCounter // Countdown before player moves to next drown "level"
 private alias object.value4 : player.drownLevel
@@ -2817,6 +2821,7 @@ function PlayerObject_HandleGround
 				if object[30].type == TypeName[Act Finish]
 				switch object.propertyValue
 					case 0
+						if player.isPlayer2 == 0
 						switch saved.SonicVictoryAnim
 							case 1
 							object.animation = 100	//sonic 3
@@ -2835,6 +2840,9 @@ function PlayerObject_HandleGround
 							object.animation = 99
 							break																																			
 						end switch	
+						else
+							object.animation = 53
+						end if
 					break
 					case 1
 						if player.isPlayer2 == 0
@@ -7092,7 +7100,11 @@ event ObjectStartup
 			LoadAnimation("Tails.ani")
 			object[0].value30 = -1
 			object[0].value32 = PlayerObject_StartTailsFlight
-			stage.player2Enabled = 1
+			if saved.TailsPlayer2 == 1
+				stage.player2Enabled = 1
+			else
+				stage.player2Enabled = 0
+			end if
 			break
 		case 2
 			LoadAnimation("Knuckles.ani")
@@ -7100,6 +7112,11 @@ event ObjectStartup
 			object[0].propertyValue = 2
 			object[0].value30 = -5
 			object[0].value32 = PlayerObject_StartKnuxGlide
+			if saved.KnuxPlayer2 == 1
+				stage.player2Enabled = 1
+			else
+				stage.player2Enabled = 0
+			end if			
 			break
 		case 5
 			LoadAnimation("Amy.ani")
@@ -7107,7 +7124,11 @@ event ObjectStartup
 			object[0].propertyValue = 5
 			object[0].value30 = -5
 			object[0].value32 = PlayerObject_StartHammerSpin
-		//	stage.player2Enabled = 0		have some fun
+			if saved.AmyPlayer2 == 1
+				stage.player2Enabled = 1
+			else
+				stage.player2Enabled = 0
+			end if	
 			break		
 		end switch
 

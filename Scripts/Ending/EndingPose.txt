@@ -533,7 +533,7 @@ end if
 	SpriteFrame(-12, -16, 27, 34, 59, 16)
 	SpriteFrame(-15, -16, 30, 34, 87, 16)
 	SpriteFrame(-15, -14, 31, 32, 118, 16)
-	switch saved.Player2Char
+	switch saved.Player2Char	//look around
 		case 1
 			SpriteFrame(-16, -21, 33, 41, 132, 57)
 			SpriteFrame(-16, -21, 33, 41, 166, 57)
@@ -545,6 +545,12 @@ end if
 			SpriteFrame(-14, -16, 29, 35, 482, 438) //51
 			SpriteFrame(-13, -16, 28, 35, 456, 402) //50
 			SpriteFrame(-14, -16, 29, 35, 482, 438) //51			
+		break
+		case 3
+			SpriteFrame(-16, -21, 32, 40, 3, 138)
+			SpriteFrame(-16, -21, 32, 40, 3, 179)
+			SpriteFrame(-16, -21, 32, 40, 3, 138)
+			SpriteFrame(-16, -21, 32, 40, 3, 179)	
 		break
 		default
 			SpriteFrame(-12, -16, 25, 34, 150, 16)
@@ -576,7 +582,7 @@ end if
 	SpriteFrame(-48, 0, 96, 40, 256, 141) //Sonic The Hedgehog Forever
 	SpriteFrame(-48, 0, 96, 40, 256, 141) //Sonic The Hedgehog Forever
 
-	switch saved.Player2Char
+	switch saved.Player2Char	//win
 		case 1
 			SpriteFrame(-12, -16, 26, 38, 128, 217)
 			SpriteFrame(-10, -16, 37, 36, 155, 219) //44
@@ -584,6 +590,10 @@ end if
 		case 2
 			SpriteFrame(-12, -15, 21, 34, 82, 148)
 			SpriteFrame(-12, -15, 21, 34, 104, 148) //44
+		break			
+		case 3
+			SpriteFrame(-15, -20, 31, 39, 197, 254)
+			SpriteFrame(-15, -21, 31, 40, 229, 253) //44
 		break			
 		default
 			SpriteFrame(-10, -13, 22, 31, 58, 99)

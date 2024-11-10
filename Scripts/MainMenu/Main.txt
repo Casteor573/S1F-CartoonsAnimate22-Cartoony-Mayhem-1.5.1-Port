@@ -222,6 +222,11 @@ public alias saveRAM[1468] : saved.AmyActClearTheme
 
 public alias saveRAM[1469] : saved.Player2Char
 
+public alias saveRAM[1470] : saved.TailsPlayer2
+public alias saveRAM[1471] : saved.KnuxPlayer2
+public alias saveRAM[1472] : saved.AmyPlayer2
+
+
 //MENU STATES
 //000 - Save Select Highlighed
 //001 - Game Modes Highlighted
