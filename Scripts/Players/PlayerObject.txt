@@ -3758,6 +3758,7 @@ if saved.FallingSprites == 1
 		if temp0 == 1
 			switch object.propertyValue
 			case 0
+				if PlayerObject_SuperState == 0
 				switch saved.SonicFallingAnim
 					case 0	//cd
 						object.animation = 97
@@ -3775,8 +3776,8 @@ if saved.FallingSprites == 1
 						object.animation = 95
 					break				
 				end switch
-				if player.isPlayer2 == 1
-					object.animation = 29
+				else
+					object.animation = 55
 				end if
 			break
 			case 1
