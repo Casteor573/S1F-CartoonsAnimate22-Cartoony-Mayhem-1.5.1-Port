@@ -1995,20 +1995,20 @@ function ca22.tailsmenu
 			menu.highlight--
 			if menu.highlight < 0
 				if saved.mobile == 1
-					menu.highlight = 10
+					menu.highlight = 9
 				else
-					menu.highlight = 10
+					menu.highlight = 9
 				end if
 			end if
 		else	
 			if inputPress.down == 1
 				menu.highlight++
 				if saved.mobile == 1
-					if menu.highlight > 10
+					if menu.highlight > 9
 						menu.highlight = 0
 					end if
 				else
-					if menu.highlight > 10
+					if menu.highlight > 9
 						menu.highlight = 0
 					end if
 				end if
@@ -2076,21 +2076,7 @@ function ca22.tailsmenu
 				end if
 			end if
 		break	
-		case 5 //Tails Jumpball	public alias saveRAM[527] : saved.TailsJumpball
-			if inputPress.left == 1
-				saved.TailsJumpball--
-				if saved.TailsJumpball < 0
-					saved.TailsJumpball  = 1
-				end if
-			end if
-			if inputPress.right == 1
-				saved.TailsJumpball++
-				if saved.TailsJumpball > 1
-					saved.TailsJumpball = 0
-				end if
-			end if
-		break				
-		case 6 //Tails Jumpball	public alias saveRAM[528] : saved.TailsDeath
+		case 5 //Tails Jumpball	public alias saveRAM[528] : saved.TailsDeath
 			if inputPress.left == 1
 				saved.TailsDeath--
 				if saved.TailsDeath < 0
@@ -2104,7 +2090,7 @@ function ca22.tailsmenu
 				end if
 			end if
 		break	
-		case 7 //Tails Jumpball	public alias saveRAM[528] : saved.TailsDeath
+		case 6 //Tails Jumpball	public alias saveRAM[528] : saved.TailsDeath
 			if inputPress.left == 1
 				saved.TailsDrown--
 				if saved.TailsDrown < 0
@@ -2118,7 +2104,7 @@ function ca22.tailsmenu
 				end if
 			end if
 		break	
-		case 8 //Tails Jumpball	public alias saveRAM[528] : saved.TailsDeath
+		case 7 //Tails Jumpball	public alias saveRAM[528] : saved.TailsDeath
 			if inputPress.left == 1
 				saved.TailsSkid--
 				if saved.TailsSkid < 0
@@ -2132,7 +2118,7 @@ function ca22.tailsmenu
 				end if
 			end if
 		break	
-		case 9 //Tails Jumpball	public alias saveRAM[528] : saved.TailsDeath
+		case 8 //Tails Jumpball	public alias saveRAM[528] : saved.TailsDeath
 			if inputPress.left == 1
 				saved.TailsEndingPose--
 				if saved.TailsEndingPose < 0
@@ -2146,7 +2132,7 @@ function ca22.tailsmenu
 				end if
 			end if
 		break	
-		case 10 //Tails Jumpball	public alias saveRAM[528] : saved.TailsDeath
+		case 9 //Tails Jumpball	public alias saveRAM[528] : saved.TailsDeath
 			if inputPress.left == 1
 				saved.TailsSignPost--
 				if saved.TailsSignPost < 0
@@ -2460,12 +2446,12 @@ function ca22.amymenu
 			if inputPress.left == 1
 				saved.AmySkidAnim--
 				if saved.AmySkidAnim < 0
-					saved.AmySkidAnim  = 3
+					saved.AmySkidAnim  = 2
 				end if
 			end if
 			if inputPress.right == 1
 				saved.AmySkidAnim++
-				if saved.AmySkidAnim > 3
+				if saved.AmySkidAnim > 2
 					saved.AmySkidAnim = 0
 				end if
 			end if
@@ -5337,28 +5323,6 @@ function ca22.tailsdraw
 	case 3
 		text.drawline = 231
 		break				
-	end switch
-	CallFunction(option.text)
-	text.ypos += 21
-	menu.line++	
-
-
-	//Tails Bored
-	text.xpos = text.margin
-	text.drawalign = TEXT_LEFT_ALIGN
-	text.drawline = 233
-	CallFunction(option.text)
-	
-	text.xpos = screen.xsize
-	text.xpos -= text.margin.right
-	text.drawalign = TEXT_CENTER_ALIGN
-	switch saved.TailsJumpball
-	case 0
-		text.drawline = 59	//Sonic 1
-		break		
-	case 1
-		text.drawline = 234	//Adventure
-		break			
 	end switch
 	CallFunction(option.text)
 	text.ypos += 21

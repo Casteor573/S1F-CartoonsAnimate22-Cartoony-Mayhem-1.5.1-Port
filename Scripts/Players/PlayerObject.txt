@@ -838,10 +838,12 @@ function PlayerObject_CheckHit
 	temp0 |= checkResult
 	CheckEqual(object[currentPlayer].animation, ANI_GLIDING)
 	temp0 |= checkResult
-		CheckEqual(object[currentPlayer].animation, 61)
-		temp0 |= checkResult
+	if object[0].propertyValue == 5	
 		CheckEqual(object[currentPlayer].animation, 62)
+		temp0 |= checkResult
+		CheckEqual(object[currentPlayer].animation, 61)
 		temp0 |= checkResult		
+	end if		
 	CheckEqual(object[currentPlayer].animation, ANI_GLIDING_STOP)
 	temp0 |= checkResult
 	CheckNotEqual(object[currentPlayer].value7, 0)
@@ -1900,23 +1902,6 @@ function PlayerObject_StartJump
             object.angle = 0
             object.collisionMode = CMODE_FLOOR
 		    object.value1 = 1
-
-			if object.propertyValue == 1	//just this once
-				if player.isPlayer2 == 0
-					switch saved.TailsJumpball
-					default
-						ANI_JUMPING = 10	//default
-					break
-					case 1
-						ANI_JUMPING = 49	//adventure
-					break
-					end switch
-				else
-					ANI_JUMPING = 10	
-				end if
-			else
-				ANI_JUMPING = 10
-			end if	
 
 			object.animation = ANI_JUMPING
 			if object.propertyValue == 5
@@ -3127,11 +3112,11 @@ function PlayerObject_HandleGround
 								end if
 								if object.direction == 0
 									if object.speed <= 0x70000
-										object.speed += 0x20000
+										object.speed += 0x10000
 									end if
 								else
 									if object.speed >= 0x70000
-										object.speed -= 0x20000
+										object.speed -= 0x10000
 									end if
 								end if
 							end if
@@ -3634,7 +3619,7 @@ function PlayerObject_HandleAir
 										end if
 									end if
 									if object.jumpPress == 1
-										object.state = PlayerObject_AntonFall
+										object.state = PlayerObject_AntonBounce
 										player.doubleJumpState = 2
 									end if	
 									break
@@ -3867,7 +3852,11 @@ end if
 							object.yvel = -0x62000
 						end if
 						player.doubleJumpState = 2
-						object.animation = 62
+						if object.jumpHold == 1	
+							object.animation = 62
+						else
+							object.animation = ANI_JUMPING
+						end if	
 					end if			
 				end if
 			end if			
@@ -3972,7 +3961,7 @@ function PlayerObject_AntonBounce
 			else
 				player.doubleJumpState = 1
 				object.gravity = GRAVITY_AIR
-				temp1 = 0x80000
+				temp1 = 0x85000
 				temp1 += player.gravityValue
 
 				Sin256(object.yvel, object.angle)
@@ -7103,7 +7092,7 @@ event ObjectStartup
 			LoadAnimation("Tails.ani")
 			object[0].value30 = -1
 			object[0].value32 = PlayerObject_StartTailsFlight
-			stage.player2Enabled = 0
+			stage.player2Enabled = 1
 			break
 		case 2
 			LoadAnimation("Knuckles.ani")

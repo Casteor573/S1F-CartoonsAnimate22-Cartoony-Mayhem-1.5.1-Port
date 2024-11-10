@@ -449,15 +449,7 @@ end event
 
 
 event ObjectDraw
-	if stage.playerlistPos == 1
-		if saved.TailsJumpball == 1
-			object.animation = 49
-		else
-			object.animation = ANI_JUMPING
-		end if		
-	else
-		object.animation = ANI_JUMPING
-	end if
+	object.animation = ANI_JUMPING
 	DrawObjectAnimation()
 end event
 
