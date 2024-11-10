@@ -910,8 +910,8 @@ function PlayerObject_BadnikBreak
 	temp0 |= checkResult
 	CheckEqual(object[currentPlayer].animation, ANI_GLIDING_STOP)
 	temp0 |= checkResult
-		CheckEqual(object[currentPlayer].animation, 66)
-		temp0 |= checkResult
+	//	CheckEqual(object[currentPlayer].animation, 66)
+	//	temp0 |= checkResult
 	if object[0].propertyValue == 5	
 		CheckEqual(object[currentPlayer].animation, 62)
 		temp0 |= checkResult

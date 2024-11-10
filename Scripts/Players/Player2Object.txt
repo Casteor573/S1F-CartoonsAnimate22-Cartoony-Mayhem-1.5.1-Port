@@ -410,11 +410,18 @@ function Player2Object_Function66
 		end if
 	end if
 	object.xpos += temp0
+
 	if object.ypos < player.targetLeaderPos.y
 		object.ypos += 0x10000
+		if saved.Player2Char != 0
+			object.yvel += 0x1000
+		end if
 	end if
 	if object.ypos > player.targetLeaderPos.y
 		object.ypos -= 0x10000
+		if saved.Player2Char != 0
+			object.yvel -= 0x1000
+		end if
 	end if
 	if object[0].type != TypeName[Death Event]
 		if object[0].state != PlayerObject_Death
