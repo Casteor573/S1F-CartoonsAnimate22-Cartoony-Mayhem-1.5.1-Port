@@ -123,7 +123,7 @@ event ObjectMain
 		case 4
 			temp0 = object[-1].value1
 			FlipSign(temp0)
-			temp0 += 39
+			temp0 += 44
 			
 			object.ixpos = temp0
 
@@ -199,12 +199,12 @@ event ObjectStartup
 	LoadAnimation("Sonic.ani")
 	LoadPalette("SpecialStage.act", 0, 0, 0, 70)
 	SpriteFrame(-140, -199, 387, 199, 212, 237) // BG 
-	SpriteFrame(-164, 0, 327, 29, 1, 513) // Logo
-	SpriteFrame(-87, 0, 45, 29, 32, 543) // OO
-	SpriteFrame(-87, 0, 45, 29, 78, 543) // OO fusion
-	SpriteFrame(-86, 0, 43, 29, 124, 543) // OO into eyes fusion
-	SpriteFrame(-86, 0, 43, 29, 168, 543) // OO into eyes fusion
-	SpriteFrame(-86, 0, 43, 29, 212, 543) // eyes
+	SpriteFrame(-160, 0, 327, 29, 1, 513) // Logo
+	SpriteFrame(-86, 0, 45, 29, 32, 543) // OO
+	SpriteFrame(-86, 0, 45, 29, 78, 543) // OO fusion
+	SpriteFrame(-85, -1, 43, 29, 124, 543) // OO into eyes fusion
+	SpriteFrame(-85, -1, 43, 29, 168, 543) // OO into eyes fusion
+	SpriteFrame(-85, -1, 43, 29, 212, 543) // eyes
 
 	SetMusicTrack("CA22Intro.ogg", 1, 0)	
 end event
