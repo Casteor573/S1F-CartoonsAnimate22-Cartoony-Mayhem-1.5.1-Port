@@ -2502,12 +2502,12 @@ function ca22.amymenu
 			if inputPress.left == 1
 				saved.AmySkidAnim--
 				if saved.AmySkidAnim < 0
-					saved.AmySkidAnim  = 3
+					saved.AmySkidAnim  = 2
 				end if
 			end if
 			if inputPress.right == 1
 				saved.AmySkidAnim++
-				if saved.AmySkidAnim > 3
+				if saved.AmySkidAnim > 2
 					saved.AmySkidAnim = 0
 				end if
 			end if
