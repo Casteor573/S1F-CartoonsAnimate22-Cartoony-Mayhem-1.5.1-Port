@@ -915,8 +915,6 @@ function PlayerObject_BadnikBreak
 	temp0 |= checkResult
 	CheckEqual(object[currentPlayer].animation, ANI_GLIDING_STOP)
 	temp0 |= checkResult
-	//	CheckEqual(object[currentPlayer].animation, 66)
-	//	temp0 |= checkResult
 	if object[0].propertyValue == 5	
 		CheckEqual(object[currentPlayer].animation, 62)
 		temp0 |= checkResult
@@ -927,7 +925,6 @@ function PlayerObject_BadnikBreak
 		CheckEqual(object[currentPlayer].animation, 61)
 		temp0 |= checkResult
 	end if	
-
 	CheckNotEqual(object[currentPlayer].value7, 0)
 	temp0 |= checkResult
 	CheckEqual(object[currentPlayer].animation, ANI_FLYING)
@@ -5897,13 +5894,13 @@ function PlayerObject_Drown
 				case 2
 					object.animation = 90
 				break	
+				default
+					object.animation = ANI_DROWNING
+				break
 			end switch
 		break
 		case 1
 			switch saved.TailsDrown
-			default
-				object.animation = ANI_DROWNING
-			break
 			case 1
 				if player.isPlayer2 == 0
 					object.animation = 56	
@@ -5911,13 +5908,13 @@ function PlayerObject_Drown
 					object.animation = ANI_DROWNING
 				end if	
 			break
+			default
+				object.animation = ANI_DROWNING
+			break			
 			end switch
 		break
 		case 2
 			switch saved.KnuxDrownAnim
-			default
-				object.animation = ANI_DROWNING
-			break
 			case 1
 				if player.isPlayer2 == 0
 					object.animation = 60	
@@ -5925,13 +5922,13 @@ function PlayerObject_Drown
 					object.animation = ANI_DROWNING
 				end if	
 			break
+			default
+				object.animation = ANI_DROWNING
+			break			
 			end switch
 		break		
 		case 5
 			switch saved.AmyDrownAnim
-			default
-				object.animation = ANI_DROWNING
-			break
 			case 1
 				if player.isPlayer2 == 0
 					object.animation = 60	
@@ -5939,6 +5936,9 @@ function PlayerObject_Drown
 					object.animation = ANI_DROWNING
 				end if	
 			break
+			default
+				object.animation = ANI_DROWNING
+			break			
 			end switch
 		break			
 		default
@@ -6530,38 +6530,38 @@ function PlayerObject_MoveAnimate
 					switch saved.KnuxMaxDash
 						case 0
 							if player.isPlayer2 == 0
-							switch saved.KnuxRunAnim
-								case 1
-									object.animation = 49
-								break
-								default
+								switch saved.KnuxRunAnim
+									case 1
+										object.animation = 67
+									break
+									default
+										object.animation = ANI_RUNNING
+									break					
+								end switch
+								else
 									object.animation = ANI_RUNNING
-								break					
-							end switch
-							else
-								object.animation = ANI_RUNNING
-							end if
+								end if
 							break
 						case 1
-							object.animation = ANI_RUNNING //sorry lmao
+							object.animation = ANI_DASHMANIA //sorry lmao
 							break
 						case 2
 							object.animation = ANI_DASHMANIA
 							break
 					end switch
 				else
-							if player.isPlayer2 == 0
-							switch saved.KnuxRunAnim
-								case 1
-									object.animation = 49
-								break
-								default
-									object.animation = ANI_RUNNING
-								break					
-							end switch
-							else
-								object.animation = ANI_RUNNING
-							end if
+					if player.isPlayer2 == 0
+					switch saved.KnuxRunAnim
+						case 1
+							object.animation = 67
+						break
+						default
+							object.animation = ANI_RUNNING
+						break					
+					end switch
+					else
+						object.animation = ANI_RUNNING
+					end if
 				end if
 				break	
 			case 5 //Amy
