@@ -1614,20 +1614,20 @@ function ca22.generalmenu	//general
 			menu.highlight--
 			if menu.highlight < 0
 				if saved.mobile == 1
-					menu.highlight = 18
+					menu.highlight = 17
 				else
-					menu.highlight = 18
+					menu.highlight = 17
 				end if
 			end if
 		else	
 			if inputPress.down == 1
 				menu.highlight++
 				if saved.mobile == 1
-					if menu.highlight > 18
+					if menu.highlight > 17
 						menu.highlight = 0
 					end if
 				else
-					if menu.highlight > 18
+					if menu.highlight > 17
 						menu.highlight = 0
 					end if
 				end if
@@ -1863,20 +1863,6 @@ function ca22.generalmenu	//general
 			end if
 		break	
 		case 17 //Falling sprite
-			if inputPress.left == 1
-				saved.KnuxPlayer2--
-				if saved.KnuxPlayer2 < 0
-					saved.KnuxPlayer2  = 1
-				end if
-			end if
-			if inputPress.right == 1
-				saved.KnuxPlayer2++
-				if saved.KnuxPlayer2 > 1
-					saved.KnuxPlayer2 = 0
-				end if
-			end if
-		break							
-		case 18 //Falling sprite
 			if inputPress.left == 1
 				saved.AmyPlayer2--
 				if saved.AmyPlayer2 < 0
@@ -5131,26 +5117,6 @@ function ca22.generaldraw
 	text.ypos += 21
 	menu.line++		
 
-	
-	text.xpos = text.margin
-	text.drawalign = TEXT_LEFT_ALIGN
-	text.drawline = 295
-	CallFunction(option.text)
-	
-	text.xpos = screen.xsize
-	text.xpos -= text.margin.right
-	text.drawalign = TEXT_CENTER_ALIGN
-	switch saved.KnuxPlayer2
-	case 0
-		text.drawline = 11	//Tails
-		break
-	case 1
-		text.drawline = 12	//Knuckles
-		break
-	end switch
-	CallFunction(option.text)
-	text.ypos += 21
-	menu.line++	
 
 	
 	text.xpos = text.margin
