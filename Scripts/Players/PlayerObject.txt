@@ -5264,11 +5264,11 @@ end function
 function PlayerObject_KnuxWallClimb
 	if object.gravity == GRAVITY_AIR
 		if player.isPlayer2 == 0
-			switch saved.KnuxHurtAnim
+			switch saved.KnuxClimbAnim
 				case 1
 					object.animation = 56
 						if object.up == 1
-							object.animation = ANI_CLIMBING
+							object.animation = 68
 						end if
 						if object.down == 1
 							object.animation = 57
