@@ -848,6 +848,11 @@ function PlayerObject_CheckHit
 		CheckEqual(object[currentPlayer].animation, 61)
 		temp0 |= checkResult		
 	end if		
+	if object[0].propertyValue == 2
+		CheckEqual(object[currentPlayer].animation, 61)
+		temp0 |= checkResult
+	end if	
+
 	CheckEqual(object[currentPlayer].animation, ANI_GLIDING_STOP)
 	temp0 |= checkResult
 	CheckNotEqual(object[currentPlayer].value7, 0)
@@ -917,8 +922,11 @@ function PlayerObject_BadnikBreak
 		temp0 |= checkResult
 		CheckEqual(object[currentPlayer].animation, 61)
 		temp0 |= checkResult		
-	end if
-
+	end if		
+	if object[0].propertyValue == 2
+		CheckEqual(object[currentPlayer].animation, 61)
+		temp0 |= checkResult
+	end if	
 
 	CheckNotEqual(object[currentPlayer].value7, 0)
 	temp0 |= checkResult
