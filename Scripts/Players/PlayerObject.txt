@@ -2748,14 +2748,6 @@ function PlayerObject_HandleGround
 							break	
 							case 2
 								object.animation = 47
-								object.value1++
-								if object.value1 == 836
-									object.value1 = 0
-									object.animation = ANI_STOPPED
-								end if	
-							break		
-							case 3
-								object.animation = 48
 							break		
 							default
 								object.animation = ANI_WAITING
@@ -2802,14 +2794,7 @@ function PlayerObject_HandleGround
 					break
 				end switch		
 				
-					if stage.playerListPos == 2
-						object.value1++
-						if object.value1 == 836
-							object.value1 = 0
-							object.animation = ANI_STOPPED
-						end if
-					end if	
-
+		
 
 					if stage.playerListPos == 5
 						if options.gameMode != 3

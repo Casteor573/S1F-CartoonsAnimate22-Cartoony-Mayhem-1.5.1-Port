@@ -96,10 +96,18 @@ end function
 
 
 function Player2Object_Function70
-	CheckNotEqual(player.p2InputFunction, Player2Object_Function69)
-	temp0 = checkResult
-	CheckNotEqual(object[0].up, 1)
-	temp0 &= checkResult
+	switch saved.Player2Char
+		case 1
+			CheckEqual(player.p2InputFunction, Player2Object_Function69)
+			temp0 = checkResult
+		break	
+		default
+			CheckNotEqual(player.p2InputFunction, Player2Object_Function69)
+			temp0 = checkResult
+			CheckNotEqual(object[0].up, 1)
+			temp0 &= checkResult
+		break
+	end switch
 	if temp0 == 0
 		switch saved.Player2Char
 		case 1
