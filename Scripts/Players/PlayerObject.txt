@@ -5278,6 +5278,8 @@ function PlayerObject_KnuxWallClimb
 					object.animation = ANI_CLIMBING
 				break
 			end switch
+		else
+			object.animation = ANI_CLIMBING
 		end if		
 			
 			if object.up == 1
@@ -5364,12 +5366,12 @@ function PlayerObject_KnuxWallClimb
 				object.xpos = temp2
 				if player.isPlayer2 == 0
 					switch saved.KnuxLedgeClimbAnim
-						default
-							object.animation = ANI_LEDGEPULLUP
-						break
 						case 1	//chaotix
 							object.animation = 58
 						break	
+						default
+							object.animation = ANI_LEDGEPULLUP
+						break						
 					end switch
 				else
 					object.animation = ANI_LEDGEPULLUP
@@ -5400,103 +5402,145 @@ end function
 
 
 function PlayerObject_KnuxLedgePullUp
-switch saved.KnuxLedgeClimbAnim
-
-default
-	switch object.frame
-	case 0
-		if object.value1 < 5
-			ObjectTileGrip(CSIDE_FLOOR, 12, -9, object.collisionPlane)
-			object.value1++
-		else
-			object.value1 = 0
-			object.frame++
-			if object.direction == FLIP_NONE
-				object.xpos += 0x90000
+if player.isPlayer2 == 0
+	switch saved.KnuxLedgeClimbAnim
+	case 1	//alt climb
+		switch object.frame
+		case 0
+			if object.value1 < 5
+				ObjectTileGrip(CSIDE_FLOOR, 12, -9, object.collisionPlane)
+				object.value1++
 			else
-				object.xpos -= 0x90000
+				object.value1 = 0
+				object.frame++
+				if object.direction == FLIP_NONE
+					object.xpos += 0x90000
+				else
+					object.xpos -= 0x90000
+				end if
+				object.ypos -= 0xA0000
 			end if
-			object.ypos -= 0xA0000
-		end if
-		break
-	case 1
-		if object.value1 < 5
-			object.value1++
-		else
-			object.value1 = 0
-			object.frame++
-			if object.direction == FLIP_NONE
-				object.xpos += 0x50000
+			break
+		case 1
+		case 2	
+		case 3
+		case 4
+			if object.value1 < 5
+				object.value1++
 			else
-				object.xpos -= 0x50000
+				object.value1 = 0
+				object.frame++
+				if object.direction == FLIP_NONE
+					object.xpos += 0x50000
+				else
+					object.xpos -= 0x50000
+				end if
+				object.ypos -= 0x20000
 			end if
-			object.ypos -= 0x20000
-		end if
+			break
+		case 5
+			if object.value1 < 5
+				object.value1++
+			else
+				object.value1 = 0
+				object.animation = ANI_STOPPED
+				object.state = PlayerObject_HandleAir
+				object.ypos -= 0xA0000
+				object.tileCollisions = 1
+			end if
+			break
+		
+		end switch
 		break
-	case 2
-		if object.value1 < 5
-			object.value1++
-		else
-			object.value1 = 0
-			object.animation = ANI_STOPPED
-			object.state = PlayerObject_HandleAir
-			object.ypos -= 0xA0000
-			object.tileCollisions = 1
-		end if
-		break
+	default
+		switch object.frame
+		case 0
+			if object.value1 < 5
+				ObjectTileGrip(CSIDE_FLOOR, 12, -9, object.collisionPlane)
+				object.value1++
+			else
+				object.value1 = 0
+				object.frame++
+				if object.direction == FLIP_NONE
+					object.xpos += 0x90000
+				else
+					object.xpos -= 0x90000
+				end if
+				object.ypos -= 0xA0000
+			end if
+			break
+		case 1
+			if object.value1 < 5
+				object.value1++
+			else
+				object.value1 = 0
+				object.frame++
+				if object.direction == FLIP_NONE
+					object.xpos += 0x50000
+				else
+					object.xpos -= 0x50000
+				end if
+				object.ypos -= 0x20000
+			end if
+			break
+		case 2
+			if object.value1 < 5
+				object.value1++
+			else
+				object.value1 = 0
+				object.animation = ANI_STOPPED
+				object.state = PlayerObject_HandleAir
+				object.ypos -= 0xA0000
+				object.tileCollisions = 1
+			end if
+			break
+		end switch
+	break	
 	end switch
-break
-
-case 1	//alt climb
-	switch object.frame
-	case 0
-		if object.value1 < 5
-			ObjectTileGrip(CSIDE_FLOOR, 12, -9, object.collisionPlane)
-			object.value1++
-		else
-			object.value1 = 0
-			object.frame++
-			if object.direction == FLIP_NONE
-				object.xpos += 0x90000
+else
+		switch object.frame
+		case 0
+			if object.value1 < 5
+				ObjectTileGrip(CSIDE_FLOOR, 12, -9, object.collisionPlane)
+				object.value1++
 			else
-				object.xpos -= 0x90000
+				object.value1 = 0
+				object.frame++
+				if object.direction == FLIP_NONE
+					object.xpos += 0x90000
+				else
+					object.xpos -= 0x90000
+				end if
+				object.ypos -= 0xA0000
 			end if
-			object.ypos -= 0xA0000
-		end if
-		break
-	case 1
-	case 2	
-	case 3
-	case 4
-		if object.value1 < 5
-			object.value1++
-		else
-			object.value1 = 0
-			object.frame++
-			if object.direction == FLIP_NONE
-				object.xpos += 0x50000
+			break
+		case 1
+			if object.value1 < 5
+				object.value1++
 			else
-				object.xpos -= 0x50000
+				object.value1 = 0
+				object.frame++
+				if object.direction == FLIP_NONE
+					object.xpos += 0x50000
+				else
+					object.xpos -= 0x50000
+				end if
+				object.ypos -= 0x20000
 			end if
-			object.ypos -= 0x20000
-		end if
-		break
-	case 5
-		if object.value1 < 5
-			object.value1++
-		else
-			object.value1 = 0
-			object.animation = ANI_STOPPED
-			object.state = PlayerObject_HandleAir
-			object.ypos -= 0xA0000
-			object.tileCollisions = 1
-		end if
-		break
-	
-	end switch
-	break
-
-end switch
+			break
+		case 2
+			if object.value1 < 5
+				object.value1++
+			else
+				object.value1 = 0
+				object.animation = ANI_STOPPED
+				object.state = PlayerObject_HandleAir
+				object.ypos -= 0xA0000
+				object.tileCollisions = 1
+			end if
+			break
+		end switch
+end if		
 end function
 
 
