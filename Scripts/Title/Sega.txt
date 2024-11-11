@@ -353,8 +353,13 @@ event ObjectMain
 			object.value0 += 8
 			SetClassicFade(0, 0, 0, object.value0)
 		else
-			ResetObjectEntity(object.entityPos, TypeName[Sonic Team], 0, object.xpos, object.ypos)
-			SetClassicFade(0, 0, 0, object.value0)
+			object.value6++
+			if object.value6 == 50
+				ResetObjectEntity(object.entityPos, TypeName[Sonic Team], 0, object.xpos, object.ypos)
+				SetClassicFade(0, 0, 0, object.value0)
+			else
+				SetClassicFade(0, 0, 0, object.value0)
+			end if
 		end if
 		break
 	end switch
