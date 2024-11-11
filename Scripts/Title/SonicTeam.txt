@@ -15,56 +15,71 @@ private alias 2 : TYPE_SONICTEAM
 event ObjectMain	
 	switch object.state
 	case 0
-		object.value0 = 320
+		object.value0 = 50
+		object.value1 = screen.xsize
+		object.value2 = screen.xsize
+		object.value2 += screen.xcenter
+		PlayMusic(1)	
 		object.state++
-		if saveRAM[278] == 1
-			LoadSpriteSheet("Title/SonicTeam.gif")
-			else
-			rand(object.value1, 15)
-			//force a screen with this!
-			//object.value1 = 13
-		end if
-
-		if object.value1 == 2
-			
-			PlaySfx(SfxName[Event], 0)
-			
-		end if
-
-
-		SetScreenFade(0, 0, 0, 255)
 		CallFunction(SkipScreen)
 		break
 	case 1
-		if object.value0 > 0
-			object.value0 -= 8
-		else
+		object.value0--
+		if object.value0 == 0
 			object.state++
 		end if
-		SetScreenFade(0, 0, 0, object.value0)
 		CallFunction(SkipScreen)
 		break
 	case 2
-		object.value0++
-		if  object.value1 == 3
-		temp2 = 140
+		if object.value3 < 256
+			object.value3 += 24
 		else
-		temp2 = 120
-		end if
-
-		if object.value0 >= temp2
-			object.value0 = 0
 			object.state++
 		end if
 		CallFunction(SkipScreen)
 		break
 	case 3
-		if object.value0 < 320
+		if object.value3 > 0
+			object.value3 -= 24
+		else
+			object.state++
+		end if
+		CallFunction(SkipScreen)		
+		break
+	case 4
+		object.value0++
+
+		if object.value1 <= 15
+			temp0 = object.value1
+			temp0 >>= 3
+			temp0++
+			object.value1 -= temp0
+			
+			temp0 = object.value2
+			temp0 /= 10
+			temp0 += 2
+			temp0++
+			object.value2 -= temp0	
+		else
+			object.value1 -= 6
+		end if
+		
+		if object.value0 >= 510
+			object.value0 = 0
+			object.state++
+		end if
+		CallFunction(SkipScreen)
+		break
+	case 5
+		if object.value0 < 600
 			object.value0 += 8
 		else
+			StopMusic()
+			object.value0 = 0
+
 			ResetObjectEntity(object.entityPos, TypeName[Logo], 0, 0, 0)
 		end if
-		SetScreenFade(0, 0, 0, object.value0)
+		SetClassicFade(0, 0, 0, object.value0)
 		break
 	end switch
 end event
@@ -75,319 +90,42 @@ function SkipScreen
 		inputPress.start = 1
 	end if
 	if inputPress.start == 1
-		object.state = 3
+		object.state = 5
 	end if
 end function
 
 
 event ObjectDraw
-	if saveRAM[278] == 0
-		DrawRect(0, 0, screen.xsize, screen.ysize, color1, 0, color1, 255)
-		switch object.value1
-		case 0	//The Ca22 Gang
+	DrawRect(0, 0, screen.xsize, screen.ysize, color1, 0, color1, 255)
 
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
+	temp0 = object.value2
+	temp0 += screen.xcenter
 
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, screen.ycenter)
+	temp1 = object.value2
+	temp1 += screen.ysize
+	temp1 += 30
 	
-		DrawSpriteScreenXY(2, screen.xcenter, 110) //knux
-		DrawSpriteScreenXY(3, screen.xcenter, 96) //sonic
-		DrawSpriteScreenXY(4, screen.xcenter, 107) //eggman	
-		DrawSpriteScreenXY(5, screen.xcenter, 128) //tails		
-		DrawSpriteScreenXY(6, screen.xcenter, 128) //tails		
-		
-		
-		break
-		case 1	//tubers
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 150)
-		
-
-		DrawSpriteScreenXY(9, screen.xcenter, 110) //Sonic TUBERS ASIOGJLANKSLGL
-		DrawSpriteScreenXY(10, screen.xcenter, 90) //Gaming
-
-
-
-		break
-
-		case 2	//Manias!
-				DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 150)
-		
-
-		DrawSpriteScreenXY(11, screen.xcenter, 110) //Mighty and Ray Cameo
+	DrawSpriteScreenXY(0, temp0, temp1)
 	
-		DrawSpriteScreenXY(12, screen.xcenter, 235)
-
-
-		break		
-
-		case 3	//Knux ball
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 150)
-			
-
-
-		DrawSpriteScreenXY(15, screen.xcenter, 80) //Knux Baller
-		DrawSpriteScreenXY(13, screen.xcenter, 110) //Sonic Fear
-		DrawSpriteScreenXY(14, screen.xcenter, 120) //Tails Fear	
-
-
-
-
-		break				
+	temp0 = object.value1
+	FlipSign(temp0)
+	temp0 += screen.xcenter
 	
+	DrawSpriteScreenXY(1, temp0, screen.ycenter)
 
-
-		case 4	//???		time capsule
-
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-			
-
-		
-		DrawSpriteScreenXY(19, screen.xcenter, 16) //Mighty and Ray Cameo	
-		DrawSpriteScreenXY(20, screen.xcenter, 98) //Mighty and Ray Cameo				
-		DrawSpriteScreenXY(21, screen.xcenter, 105) //Mighty and Ray Cameo				
-				
-	
-		break				
-			
-		
-		case 5	//Movie Reference
-
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-			
-
-		
-		DrawSpriteScreenXY(23, screen.xcenter, screen.ycenter) //Movie
-	
-	
-		break	
-
-		case 6	//Scared Knux
-
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-		
-		DrawSpriteScreenXY(24, screen.xcenter, screen.ycenter) //scared
-	
-	
-		break			
-		case 7	//Sonic 2
-
-
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner			
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-		DrawSpriteScreenXY(25, screen.xcenter, 100) //tails				
-
-		
-		DrawSpriteScreenXY(26, screen.xcenter, 91) //Mighty and Ray Cameo	
-	
-	
-		break	
-		case 8	//Bluckles??
-
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-			
-
-		
-		DrawSpriteScreenXY(27, screen.xcenter, 130) //Sonic
-		DrawSpriteScreenXY(28, screen.xcenter, 130) //Knuckles
-		DrawSpriteScreenXY(29, screen.xcenter, 130) //Knuckles	
-
-		break	
-		case 9	//Bitch
-
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-			
-
-		
-		DrawSpriteScreenXY(30, screen.xcenter, 130) //Sonic
-	
-
-
-		break	
-		case 10	//Bitch
-
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-			
-
-		
-		DrawSpriteScreenXY(31, screen.xcenter, 130) //Sonic
-	
-
-
-		break		
-		case 11	//Pink Hedgehog Escape
-
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-			
-
-		
-		DrawSpriteScreenXY(9, screen.xcenter, 120) //Sonic TUBERS ASIOGJLANKSLGL
-
-		DrawSpriteScreenXY(32, screen.xcenter, 120) //Amy Chase
-		DrawSpriteScreenXY(33, screen.xcenter, 120) //Amy Chase
-
-		break	
-		case 12	//bro think he gronic
-
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-			
-
-		
-		DrawSpriteScreenXY(35, screen.xcenter, 110) //Sonis
-
-		DrawSpriteScreenXY(34, screen.xcenter, 116) //tails run
-
-
-		break		
-		case 13	//surfboard!! (gone wrong)
-
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-			
-
-		
-		DrawSpriteScreenXY(36, screen.xcenter, 112) //knux fear
-
-		DrawSpriteScreenXY(37, screen.xcenter, 116) //sonis
-
-		break	
-
-		case 14	//surfboard!! (gone wrong)
-
-		DrawSpriteScreenXY(22, screen.xcenter, 16) //banner		
-
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, 160)
-			
-
-		
-		DrawSpriteScreenXY(38, screen.xcenter, 112) //knux fear
-
-		break		
-
-		end switch				
-	
-	else
-		DrawRect(0, 0, screen.xsize, screen.ysize, color7, color7, color7, 255)
-		DrawSpriteScreenXY(saveRAM[278], screen.xcenter, screen.ycenter)
-				
-
-	end if
-	
-
-
-	if object.state == 0
+	if object.state <= 1
 		DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, 255)
-	end if
-
+	end if	
+	DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, color5, object.value3)		
 end event
 
 
 event ObjectStartup
-	LoadSpriteSheet("Title/SonicTeam.gif")
 	LoadSpriteSheet("Title/SonicTeamUSA.gif")
-	switch saved.language
-	case 0
-		SpriteFrame(-76, -24, 148, 40, 1, 1)
-		break
-	case 1 //PTBR
-		SpriteFrame(-76, -24, 148, 40, 1, 42)
-		break	
-	case 2 //SP
-		SpriteFrame(-76, -24, 148, 40, 1, 83)
-		break	
-	case 3 //FR
-		SpriteFrame(-76, -24, 148, 40, 1, 124)
-		break	
-	case 4 //GE
-		SpriteFrame(-80, -24, 160, 40, 1, 165)
-		break	
-	end switch
-	SpriteFrame(-256, -128, 512, 256, 0, 0)	//1
-	SpriteFrame(-86, -24, 53, 33, 150, 1) //2Knuckles on Tops
-	SpriteFrame(-0, -24, 38, 24, 204, 10) //3Sonic sit
-	SpriteFrame(76, -24, 40, 52, 150, 35) //4eggman	laugh	
-	SpriteFrame(-120, -24, 34, 32, 191, 35) //5tails face smack
-	SpriteFrame(36, -24, 23, 35, 226, 35) //amy pose
+	SpriteFrame(-140, -199, 387, 199, 212, 237) // BG 
+	SpriteFrame(-164, 0, 327, 29, 1, 513) // Logo
 
-	SpriteFrame(-76, -24, 35, 31, 243, 1) //7 EE Sonic
-	SpriteFrame(36, -24, 33, 31, 279, 1) //8 CA22 Sonic Ready
-
-	SpriteFrame(2, -24, 40, 32, 249, 33) //CA22 Sonic TUBERS ASIOGJLANKSLGL
-	SpriteFrame(-76, -24, 44, 44, 313, 1) //Gaming
-
-	SpriteFrame(-76, -24, 156, 40, 191, 71) //Mania Gang	
-	SpriteFrame(13, -24, 200, 29, 191, 112) //12 ???	
-
-	SpriteFrame(-76, -24, 38, 40, 400, 1) //13 CA22 Sonic FEAR	
-	SpriteFrame(36, -24, 41, 30, 358, 1) //14 CA22 Tails FEAR		
-	SpriteFrame(-16, -24, 31, 28, 439, 1) //15 CA22 Knux ball	
-
-	SpriteFrame(-86, -24, 163, 45, 191, 142) //16 free prrrrrrrrrromotion!
-
-	SpriteFrame(12, -24, 22, 39, 375, 72) //17 CA22 Sonic Win!
-	SpriteFrame(-24, -24, 24, 39, 350, 72) //18 DC Sonic Win!
-
-	SpriteFrame(-40, -0, 76, 120, 398, 42) //19 Time Capsule
-	SpriteFrame(-70, -0, 28, 38, 355, 142) //20 Sonic Confusion
-	SpriteFrame(40, -0, 32, 31, 475, 131) //20 Rails
-
-	SpriteFrame(-172, 25, 387, 199, 212, 237)	// 22 color banner
-
-	SpriteFrame(-35, -35, 63, 39, 448, 163) //23 movie	
-	SpriteFrame(-55, -35, 87, 48, 150, 188) //24 scare		
-
-
-	SpriteFrame(-0, -0, 35, 32, 238, 188) //25 Rails
-
-	SpriteFrame(-36, -0, 25, 41, 274, 188) //26 Sonic Win !
-
-	SpriteFrame(-20, -35, 31, 39, 300, 188) //27 Sonic Confuse
-	SpriteFrame(-60, -33, 28, 37, 332, 188) //28 Knuckles
-	SpriteFrame(20, -36, 28, 40, 361, 185) //29 Knuckles
-
-	SpriteFrame(-20, -35, 28, 39, 1, 307) //30 Bitch
-
-	SpriteFrame(-95, -45, 210, 48, 1, 258) //31 I WOKE UP IN A NEW BUGATTI !!!!!!!!!!!!!
-
-	SpriteFrame(-50, -25, 28, 33, 123, 307) //32 Amy Run
-
-	SpriteFrame(-60, -25, 9, 7, 152, 307) //33 Heart
-
-	SpriteFrame(-45, -25, 34, 34, 152, 317) //34 Tails Sonic Run
-
-
-	SpriteFrame(-2, -24, 26, 39, 1, 347) //35 sonic bruh
-
-	SpriteFrame(2, -24, 29, 37, 69, 347) //36 knux fear
-
-	SpriteFrame(-55, -50, 40, 45, 28, 347) //37 Sonis surf!
-
-	SpriteFrame(-30, -25, 56, 40, 155, 471) //38 gremlin
-
+	SetMusicTrack("CA22Intro.ogg", 1, 0)	
 end event
 
 event RSDKDraw

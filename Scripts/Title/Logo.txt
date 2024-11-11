@@ -453,10 +453,10 @@ event ObjectDraw
 	DrawSpriteScreenXY(12, 25, 225)
 
 
-	if object.state <= 5
-		object.fade = 255
-	else
+	if object.state == LOGO_IDLE_TAILS
 		object.fade -= 5
+	else
+		object.fade = 256
 	end if		
 	DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, color2, object.fade)
 
@@ -474,179 +474,172 @@ event ObjectDraw
 		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
 	end if
 
-	switch temp.titleCharacter
-	case 0
-	case 3
-		switch object.state
-		case LOGO_SETUP_SONIC
-			screen.xoffset 		 = 0
+	switch object.state
+	case LOGO_SETUP_SONIC
+		screen.xoffset 		 = 0
 
-			object.priority 	 = PRIORITY_ACTIVE
-			object.timer		 = 0x100
-			stage.activeLayer[0] = 1 //set bg to lowest layer
-			object.state++
+		object.priority 	 = PRIORITY_ACTIVE
+		object.timer		 = 0x100
+		stage.activeLayer[0] = 1 //set bg to lowest layer
+		object.state++
 
-			object[+1].type 	= TypeName[Start Message]
-			object[+1].priority = PRIORITY_ACTIVE
-			object[+1].xpos 	= screen.xcenter
-			object[+1].drawOrder 	= 2
-			
+		object[+1].type 	= TypeName[Start Message]
+		object[+1].priority = PRIORITY_ACTIVE
+		object[+1].xpos 	= screen.xcenter
+		object[+1].drawOrder 	= 2
 		
-			object[+1].ypos = 192
-			
-			Setclassicfade(0x00, 0x00, 0x00, 0xFF)
-			break
-
-		case LOGO_FADEIN_SONIC
-			screen.xoffset += 2
-
-			if object.timer > 0
-				object.timer -= 8
-			else
-				PlayMusic(0)
-				object.state++
-			end if
 	
-			Setclassicfade(0x00, 0x00, 0x00, object.timer)
-			break
+		object[+1].ypos = 192
+		
+		Setclassicfade(0x00, 0x00, 0x00, 0xFF)
+		break
 
-		case LOGO_RISEDELAY_SONIC
-			screen.xoffset += 2
+	case LOGO_FADEIN_SONIC
+		screen.xoffset += 2
 
-			object.timer++
-			if object.timer == 38
-				object.timer 		= 0
-				object.playerPos.y 	= 186
-				object.frame 		= 0
-				object.state++
+		if object.timer > 0
+			object.timer -= 8
+		else
+			PlayMusic(0)
+			object.state++
+		end if
+
+		Setclassicfade(0x00, 0x00, 0x00, object.timer)
+		break
+
+	case LOGO_RISEDELAY_SONIC
+		screen.xoffset += 2
+
+		object.timer++
+		if object.timer == 38
+			object.timer 		= 0
+			object.playerPos.y 	= 186
+			object.frame 		= 0
+			object.state++
+		end if
+		break
+
+	case LOGO_RISE_SONIC
+		screen.xoffset += 2
+
+		object.playerPos.y -= 8
+		if object.playerPos.y < 144
+			object.frame = 1
+		end if
+
+		if object.playerPos.y <= 112
+			object.playerPos.y = 112
+			object.state++
+		end if
+
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
+		break
+
+	case LOGO_ANIMATE_SONIC
+		screen.xoffset += 2
+
+		object.timer++
+		if object.timer == 8
+			object.frame++
+			if object.frame >= 7
+				object.frame = 7
+				object.state = LOGO_PREPLOGOAPPEAR_TAILS		
 			end if
-			break
+			object.timer = 0
+		end if
 
-		case LOGO_RISE_SONIC
-			screen.xoffset += 2
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
+		break
 
-			object.playerPos.y -= 8
-			if object.playerPos.y < 144
-				object.frame = 1
+	case LOGO_FINGERWIGGLE_SONIC
+		screen.xoffset += 2
+		
+
+		object.timer++
+		if object.timer == 8
+			object.frame++
+			if object.frame > 8
+				object.frame = 7
 			end if
+			object.timer = 0
+		end if
 
-			if object.playerPos.y <= 112
-				object.playerPos.y = 112
-				object.state++
-			end if
-
-			DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
-			break
-
-		case LOGO_ANIMATE_SONIC
-			screen.xoffset += 2
-
-			object.timer++
-			if object.timer == 8
-				object.frame++
-				if object.frame >= 7
-					object.frame = 7
-						object.state = LOGO_PREPLOGOAPPEAR_TAILS
-					
-				end if
-				object.timer = 0
-			end if
-
-			DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
-			break
-
-		case LOGO_FINGERWIGGLE_SONIC
-			screen.xoffset += 2
+		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
+		break
+	case LOGO_PREPLOGOAPPEAR_TAILS
+		screen.xoffset += 2
+		object.state++
 			
 
-			object.timer++
-			if object.timer == 8
+
+		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
+		break
+
+	case LOGO_SHOWLOGO_TAILS
+		screen.xoffset += 2
+
+	
+		if object.charTitlePos >= 50
+			if object.speedPercent == 0
+				object.timer++
+				if object.timer == 3
+					object.charTitlePos = 50
+					object.state++
+				end if
+				object.speedPercent = 1
+			end if
+
+			object.yvel -= 0x4000
+			if object.yvel > 0
+				object.yvel -= 0x8000
+			end if
+		else
+			object.speedPercent = 0
+			object.yvel += 0x6000
+			if object.yvel < 0
+				object.yvel += 0x8000
+			end if
+		end if
+
+		object.speedPercent += object.yvel
+		temp0 = object.speedPercent
+		temp0 >>= 16
+		object.charTitlePos += temp0
+		object.speedPercent &= 0xFFFF
+
+		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
+
+	
+		DrawSpriteScreenXY(32, screen.xcenter, object.charTitlePos)
+	
+
+	
+		break
+
+	case LOGO_IDLE_TAILS
+		screen.xoffset += 2
+
+		object.timer++
+		if object.timer == 8
+			if object[+1].value10 == 0
 				object.frame++
-				if object.frame > 8
-					object.frame = 7
-				end if
-				object.timer = 0
 			end if
-
-			DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
-			DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
-			break
-		case LOGO_PREPLOGOAPPEAR_TAILS
-			screen.xoffset += 2
-				object.state++
-				
-		
-
-			DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
-			DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
-			break
-
-		case LOGO_SHOWLOGO_TAILS
-			screen.xoffset += 2
-
-		
-			if object.charTitlePos >= 50
-				if object.speedPercent == 0
-					object.timer++
-					if object.timer == 3
-						object.charTitlePos = 50
-						object.state++
-					end if
-					object.speedPercent = 1
-				end if
-
-				object.yvel -= 0x4000
-				if object.yvel > 0
-					object.yvel -= 0x8000
-				end if
-			else
-				object.speedPercent = 0
-				object.yvel += 0x6000
-				if object.yvel < 0
-					object.yvel += 0x8000
-				end if
+			if object.frame > 8
+				object.frame = 7
 			end if
+			object.timer = 0
+		end if
 
-			object.speedPercent += object.yvel
-			temp0 = object.speedPercent
-			temp0 >>= 16
-			object.charTitlePos += temp0
-			object.speedPercent &= 0xFFFF
+		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
 
-			DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
-			DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
-
+	
+		DrawSpriteScreenXY(32, screen.xcenter, object.charTitlePos)
+		break
 		
-			DrawSpriteScreenXY(32, screen.xcenter, object.charTitlePos)
-		
-
-		
-			break
-
-		case LOGO_IDLE_TAILS
-			screen.xoffset += 2
-
-			object.timer++
-			if object.timer == 8
-				if object[+1].value10 == 0
-					object.frame++
-				end if
-				if object.frame > 8
-					object.frame = 7
-				end if
-				object.timer = 0
-			end if
-
-			DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
-			DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
-
-		
-			DrawSpriteScreenXY(32, screen.xcenter, object.charTitlePos)
-			break
-			
-		end switch
-		break	
-
 	end switch
 
 	// Logo (Bottom Half)
