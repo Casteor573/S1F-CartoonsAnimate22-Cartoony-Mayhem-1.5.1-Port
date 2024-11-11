@@ -148,7 +148,7 @@ function LZSetup_Function96
 		GetPaletteEntry(0, 2, temp1)
 		GetPaletteEntry(0, 2, temp2)
 		CallFunction(LZSetup_Function95)
-		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
 		temp2 = temp1
 		temp2 >>= 8
 		temp2 &= 255
@@ -182,7 +182,7 @@ function LZSetup_Function96
 		GetPaletteEntry(0, 3, temp1)
 		GetPaletteEntry(0, 3, temp2)
 		CallFunction(LZSetup_Function95)
-		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
 		temp2 = temp1
 		temp2 >>= 8
 		temp2 &= 255
@@ -216,7 +216,7 @@ function LZSetup_Function96
 		GetPaletteEntry(0, 4, temp1)
 		GetPaletteEntry(0, 4, temp2)
 		CallFunction(LZSetup_Function95)
-		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
 		temp2 = temp1
 		temp2 >>= 8
 		temp2 &= 255
@@ -250,7 +250,7 @@ function LZSetup_Function96
 		GetPaletteEntry(0, 5, temp1)
 		GetPaletteEntry(0, 5, temp2)
 		CallFunction(LZSetup_Function95)
-		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
 		temp2 = temp1
 		temp2 >>= 8
 		temp2 &= 255
@@ -303,7 +303,7 @@ function LZSetup_Function97
 		GetPaletteEntry(0, 16, temp1)
 		GetPaletteEntry(0, 16, temp2)
 		CallFunction(LZSetup_Function95)
-		GetTableValue(temp1, temp0, PlayerObject_TailsSuperPal)
+		GetTableValue(temp1, temp0, PlayerObject_TailsSuperAltPal)
 		temp2 = temp1
 		temp2 >>= 8
 		temp2 &= 255
@@ -371,7 +371,7 @@ function LZSetup_Function97
 		GetPaletteEntry(0, 18, temp1)
 		GetPaletteEntry(0, 18, temp2)
 		CallFunction(LZSetup_Function95)
-		GetTableValue(temp1, temp0, PlayerObject_TailsSuperPal)
+		GetTableValue(temp1, temp0, PlayerObject_TailsSuperAltPal)
 		temp2 = temp1
 		temp2 >>= 8
 		temp2 &= 255
@@ -405,7 +405,7 @@ function LZSetup_Function97
 		GetPaletteEntry(0, 19, temp1)
 		GetPaletteEntry(0, 19, temp2)
 		CallFunction(LZSetup_Function95)
-		GetTableValue(temp1, temp0, PlayerObject_TailsSuperPal)
+		GetTableValue(temp1, temp0, PlayerObject_TailsSuperAltPal)
 		temp2 = temp1
 		temp2 >>= 8
 		temp2 &= 255
