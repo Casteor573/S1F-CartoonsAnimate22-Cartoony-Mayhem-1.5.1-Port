@@ -16,9 +16,17 @@ event ObjectMain
 	switch object.state
 	case 0
 		object.value0 = 50
+		object.value4 = 2
 		object.value1 = screen.xsize
 		object.value2 = screen.xsize
 		object.value2 += screen.xcenter
+		
+		object[+1].type = TypeName[Sonic Team]
+		object[+1].priority = PRIORITY_ACTIVE	
+		object[+1].state = 6	
+		object[+1].animation = ANI_PUSHING
+		
+		
 		PlayMusic(1)	
 		object.state++
 		CallFunction(SkipScreen)
@@ -54,19 +62,41 @@ event ObjectMain
 			temp0 >>= 3
 			temp0++
 			object.value1 -= temp0
-			
+		else
+			object.value1 -= 4
+		end if
+		
+		if object.value0 >= 250
 			temp0 = object.value2
 			temp0 /= 10
 			temp0 += 2
 			temp0++
 			object.value2 -= temp0	
-		else
-			object.value1 -= 6
 		end if
 		
-		if object.value0 >= 510
-			object.value0 = 0
-			object.state++
+		if object.value0 >= 350
+			if object.value4 < 6
+				object.value5++
+				object.value5 %= 12
+				if object.value5 == 11
+					if object.value4 < 5
+						object.value4++
+					end if	
+				end if
+			end if	
+		end if
+		
+		if object.value0 == 420
+			object.value4 = 6
+		end if
+		
+		if object.value0 >= 530
+			if object.value3 < 256
+				object.value3 += 20
+			else
+				object.value0 = 0
+				object.state++
+			end if
 		end if
 		CallFunction(SkipScreen)
 		break
@@ -78,8 +108,46 @@ event ObjectMain
 			object.value0 = 0
 
 			ResetObjectEntity(object.entityPos, TypeName[Logo], 0, 0, 0)
+			ResetObjectEntity(object[+1].entityPos, TypeName[Blank Object], 0, 0, 0)
 		end if
 		SetClassicFade(0, 0, 0, object.value0)
+		break
+	case 6	
+		ProcessAnimation()	
+		
+		switch object[-1].state
+		case 0
+		case 1
+		case 2
+		case 3
+		case 4
+			temp0 = object[-1].value1
+			FlipSign(temp0)
+			temp0 += 39
+			
+			object.ixpos = temp0
+
+			if object[-1].value1 <= 1
+				object.value0++
+				if object.value0 > 80
+					object.ixpos -= object.value1
+					object.value1 += 3
+					object.animation = ANI_WALKING
+					object.direction = FLIP_X
+				else
+					object.animation = ANI_STOPPED
+					object.frame = 0
+				end if	
+			else
+				object.animation = ANI_PUSHING
+				object.animationSpeed = 20
+			end if
+
+			temp1 = screen.ycenter
+			temp1 += 9	
+			object.iypos = temp1
+			break
+		end switch	
 		break
 	end switch
 end event
@@ -96,34 +164,47 @@ end function
 
 
 event ObjectDraw
-	DrawRect(0, 0, screen.xsize, screen.ysize, color1, 0, color1, 255)
+	if object.state < 6
+		DrawRect(0, 0, screen.xsize, screen.ysize, color1, 0, color1, 255)
 
-	temp0 = object.value2
-	temp0 += screen.xcenter
+		temp0 = object.value2
+		temp0 += screen.xcenter
 
-	temp1 = object.value2
-	temp1 += screen.ysize
-	temp1 += 30
-	
-	DrawSpriteScreenXY(0, temp0, temp1)
-	
-	temp0 = object.value1
-	FlipSign(temp0)
-	temp0 += screen.xcenter
-	
-	DrawSpriteScreenXY(1, temp0, screen.ycenter)
+		temp1 = object.value2
+		temp1 += screen.ysize
+		temp1 += 30
+		
+		DrawSpriteScreenXY(0, temp0, temp1)
+		
+		temp0 = object.value1
+		FlipSign(temp0)
+		temp0 += screen.xcenter
+		
+		DrawSpriteScreenXY(1, temp0, screen.ycenter)
+		DrawSpriteScreenXY(object.value4, temp0, screen.ycenter)
 
-	if object.state <= 1
-		DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, 255)
-	end if	
-	DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, color5, object.value3)		
+		if object.state <= 1
+			DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, 255)
+		end if
+		
+		DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, color6, object.value3)	
+	else
+		DrawObjectAnimation()
+	end if
 end event
 
 
 event ObjectStartup
 	LoadSpriteSheet("Title/SonicTeamUSA.gif")
+	LoadAnimation("Sonic.ani")
+	LoadPalette("SpecialStage.act", 0, 0, 0, 70)
 	SpriteFrame(-140, -199, 387, 199, 212, 237) // BG 
 	SpriteFrame(-164, 0, 327, 29, 1, 513) // Logo
+	SpriteFrame(-87, 0, 45, 29, 32, 543) // OO
+	SpriteFrame(-87, 0, 45, 29, 78, 543) // OO fusion
+	SpriteFrame(-86, 0, 43, 29, 124, 543) // OO into eyes fusion
+	SpriteFrame(-86, 0, 43, 29, 168, 543) // OO into eyes fusion
+	SpriteFrame(-86, 0, 43, 29, 212, 543) // eyes
 
 	SetMusicTrack("CA22Intro.ogg", 1, 0)	
 end event
