@@ -3133,6 +3133,7 @@ function PlayerObject_HandleGround
 					if saved.amymoveset == 3	//superstah
 						if object.jumpHold == 1
 							if object.animation == 62
+								PlaySfx(SfxName[Hammer Dash], 0)
 								object.animation = 61
 							end if
 						else
@@ -3407,53 +3408,53 @@ function PlayerObject_HandleGround
 end function
 
 function PlayerObject_HandleBored2
-if object.propertyValue == 0
-	if PlayerObject_SuperState == 1
-		object.state = PlayerObject_HandleGround
-	else
-
-		if object.gravity == GRAVITY_AIR
-			object.state = PlayerObject_HandleAir
-			CallFunction(PlayerObject_HandleAirMovement)
+	if object.propertyValue == 0
+		if PlayerObject_SuperState == 1
+			object.state = PlayerObject_HandleGround
 		else
-			CallFunction(PlayerObject_ResetOnFloor)
-			if object.animation == ANI_CONTINUE_UP
-				if object.frame == 1
-					object.state = PlayerObject_HandleGround
-				end if
-			else
-				
-				switch saved.SonicBored
-					case 1
-						object.animation = 52
-					break	
-					case 4
-						object.animation = 55
-					break	
-				end switch	
 
-			end if
-			if object.jumpPress == 1
-				CallFunction(PlayerObject_StartJump)
+			if object.gravity == GRAVITY_AIR
+				object.state = PlayerObject_HandleAir
+				CallFunction(PlayerObject_HandleAirMovement)
 			else
-				if object.up == 1
-					object.animation = ANI_CONTINUE_UP
+				CallFunction(PlayerObject_ResetOnFloor)
+				if object.animation == ANI_CONTINUE_UP
+					if object.frame == 1
+						object.state = PlayerObject_HandleGround
+					end if
+				else
+					
+					switch saved.SonicBored
+						case 1
+							object.animation = 52
+						break	
+						case 4
+							object.animation = 55
+						break	
+					end switch	
+
 				end if
-				if object.down == 1
-					object.animation = ANI_CONTINUE_UP
-				end if
-				if object.left == 1
-					object.animation = ANI_CONTINUE_UP
-				end if
-				if object.right == 1
-					object.animation = ANI_CONTINUE_UP
+				if object.jumpPress == 1
+					CallFunction(PlayerObject_StartJump)
+				else
+					if object.up == 1
+						object.animation = ANI_CONTINUE_UP
+					end if
+					if object.down == 1
+						object.animation = ANI_CONTINUE_UP
+					end if
+					if object.left == 1
+						object.animation = ANI_CONTINUE_UP
+					end if
+					if object.right == 1
+						object.animation = ANI_CONTINUE_UP
+					end if
 				end if
 			end if
 		end if
+	else
+		object.state = PlayerObject_HandleGround
 	end if
-else
-	object.state = PlayerObject_HandleGround
-end if
 end function
 
 
@@ -3628,6 +3629,7 @@ function PlayerObject_HandleAir
 									end if
 									if object.jumpPress == 1
 										object.state = PlayerObject_AntonBounce
+										PlaySfx(SfxName[Hammer Jump], 0)
 										player.doubleJumpState = 2
 									end if	
 									break
@@ -3848,7 +3850,7 @@ end if
 			if saved.amymoveset == 3
 				if object.jumpPress == 1
 					if player.doubleJumpState == 1
-						PlaySfx(SfxName[Insta Shield], 0)
+						PlaySfx(SfxName[Hammer Jump], 0)
 						if PlayerObject_SuperState == 1
 							object.yvel = -0x90000
 						else
@@ -3928,71 +3930,90 @@ function PlayerObject_UnusedAnton
 end function
 
 function PlayerObject_AntonFall
-		if object.jumpHold == 1
-			if object.gravity == GRAVITY_AIR
-				Callfunction(PlayerObject_HandleAir)
-
-				object.animation = 62
-				ObjectTileCollision(CSIDE_FLOOR, 0, object.collisionBottom, object.collisionPlane)
-				if checkResult == 0
-					object.yvel = 0
-					object.state = PlayerObject_AntonBounce
-				else
-					object.yvel += 10000
-				end if	
-
+	if object.jumpHold == 1
+		if object.gravity == GRAVITY_AIR
+			Callfunction(PlayerObject_HandleAir)
+			object.animation = 62
+			ObjectTileCollision(CSIDE_FLOOR, 0, object.collisionBottom, object.collisionPlane)
+			if checkResult == 0
+				object.yvel = 0
+				object.state = PlayerObject_AntonBounce		
 			else
-
-			
-				object.animation = 47
-				object.state = PlayerObject_HandleAir	
-			end if
+				object.yvel += 0xA00
+			end if	
 		else
 			object.animation = 47
-			object.state = PlayerObject_HandleAir		
+			object.state = PlayerObject_HandleAir	
 		end if
-
+	else
+		object.animation = 47
+		object.state = PlayerObject_HandleAir		
+	end if
 end function
 
 function PlayerObject_AntonBounce
-		if object.jumpHold == 1
-			if object.gravity == GRAVITY_AIR
-				CallFunction(PlayerObject_HandleAirAcceleration)
-				CallFunction(PlayerObject_HandleAirMovement)
-				object.state = PlayerObject_AntonBounce
-				object.animation = 62
-				temp0 = object.collisionBottom
-				ObjectTileCollision(CSIDE_FLOOR, 0, temp0, object.collisionPlane)
-				if checkResult == 0
-					object.yvel += 10000
-				end if
-			else
-				player.doubleJumpState = 1
-				object.gravity = GRAVITY_AIR
-				temp1 = 0x85000
-				temp1 += player.gravityValue
-
-				Sin256(object.yvel, object.angle)
-				object.yvel *= object.speed
-				Cos256(temp0, object.angle)
-				temp0 *= temp1
-				object.yvel -= temp0
-				object.yvel >>= 8
-			
-				object.scrollTracking = 1
-				
-				object.angle = 0
-				object.collisionMode = CMODE_FLOOR
-				object.value1 = 1
-				CallFunction(PlayerObject_HandleAirMovement)
-				CallFunction(PlayerObject_HandleAirAcceleration)
-				PlaySfx(SfxName[Thud], 0)
-				object[+playerCount].state = 4
-			end if
+	if object.jumpHold == 1
+		if object.gravity == GRAVITY_AIR
+			CallFunction(PlayerObject_HandleAirAcceleration)
+			CallFunction(PlayerObject_HandleAirMovement)
+			object.state = PlayerObject_AntonBounce
+			object.animation = 62
+			temp0 = object.collisionBottom
+			ObjectTileCollision(CSIDE_FLOOR, 0, temp0, object.collisionPlane)
+			if checkResult == 0
+				object.yvel += 0xA00
+			end if		
 		else
-			object.animation = 47
-			object.state = PlayerObject_HandleAir		
+			player.doubleJumpState = 1
+			object.gravity = GRAVITY_AIR
+			temp1 = 0x85000
+			temp1 += player.gravityValue
+
+			Sin256(object.yvel, object.angle)
+			object.yvel *= object.speed
+			Cos256(temp0, object.angle)
+			temp0 *= temp1
+			object.yvel -= temp0
+			object.yvel >>= 8
+		
+			object.scrollTracking = 1
+			
+			object.angle = 0
+			object.collisionMode = CMODE_FLOOR
+			object.value1 = 1
+			CallFunction(PlayerObject_HandleAirMovement)
+			CallFunction(PlayerObject_HandleAirAcceleration)
+			PlaySfx(SfxName[Thud], 0)
+
+			CreateTempObject(TypeName[Dust Puff], 0, object.xpos, object.ypos)
+			object[tempObjectPos].iypos += object.collisionBottom
+			object[tempObjectPos].drawOrder = player.sortedDrawOrder
+			object[tempObjectPos].xvel = 0x10000
+			CreateTempObject(TypeName[Dust Puff], 0, object.xpos, object.ypos)
+			object[tempObjectPos].iypos += object.collisionBottom
+			object[tempObjectPos].drawOrder = player.sortedDrawOrder
+			object[tempObjectPos].xvel = 0x18000
+			CreateTempObject(TypeName[Dust Puff], 0, object.xpos, object.ypos)
+			object[tempObjectPos].iypos += object.collisionBottom
+			object[tempObjectPos].drawOrder = player.sortedDrawOrder
+			object[tempObjectPos].xvel = 0x20000
+			CreateTempObject(TypeName[Dust Puff], 0, object.xpos, object.ypos)
+			object[tempObjectPos].iypos += object.collisionBottom
+			object[tempObjectPos].drawOrder = player.sortedDrawOrder
+			object[tempObjectPos].xvel = -0x10000
+			CreateTempObject(TypeName[Dust Puff], 0, object.xpos, object.ypos)
+			object[tempObjectPos].iypos += object.collisionBottom
+			object[tempObjectPos].drawOrder = player.sortedDrawOrder
+			object[tempObjectPos].xvel = -0x18000
+			CreateTempObject(TypeName[Dust Puff], 0, object.xpos, object.ypos)
+			object[tempObjectPos].iypos += object.collisionBottom
+			object[tempObjectPos].drawOrder = player.sortedDrawOrder
+			object[tempObjectPos].xvel = -0x20000	
 		end if
+	else
+		object.animation = 47
+		object.state = PlayerObject_HandleAir		
+	end if
 end function
 
 function PlayerObject_AirCtrlLock
@@ -6779,6 +6800,75 @@ event ObjectMain
 			end if
 		end if
 	end if
+
+	if stage.playerListPos == 5
+		temp0 = false
+
+		if object[currentPlayer].animation == 62
+			temp0 = true
+
+			player[currentPlayer].hitboxTop = -25
+			player[currentPlayer].hitboxBottom = 25
+			player[currentPlayer].hitboxLeft = -25
+			player[currentPlayer].hitboxRight = 25
+		end if
+
+		if object[currentPlayer].animation == 61
+			temp0 = true
+
+			player[currentPlayer].hitboxBottom = 17
+			player[currentPlayer].hitboxTop = -24
+			player[currentPlayer].hitboxLeft = -18
+			player[currentPlayer].hitboxRight = 10
+
+			switch object[currentPlayer].frame
+			case 0
+			case 4
+				player[currentPlayer].hitboxTop = -17
+				player[currentPlayer].hitboxLeft = -10
+				player[currentPlayer].hitboxRight = 23
+				break
+
+			case 1
+			case 5
+				player[currentPlayer].hitboxTop = -17
+				player[currentPlayer].hitboxLeft = -23
+				player[currentPlayer].hitboxRight = 10
+				break
+
+			case 2
+			case 6
+				player[currentPlayer].hitboxTop = -24
+				player[currentPlayer].hitboxLeft = -18
+				player[currentPlayer].hitboxRight = 10
+				break
+
+			case 3
+			case 7
+				player[currentPlayer].hitboxTop = -26
+				player[currentPlayer].hitboxLeft = -10
+				player[currentPlayer].hitboxRight = 25
+				break
+			end switch
+
+			if object[currentPlayer].direction == FLIP_X
+				// Swap the left and right values
+				temp1 = player[currentPlayer].hitboxLeft
+				player[currentPlayer].hitboxLeft = player[currentPlayer].hitboxRight
+				player[currentPlayer].hitboxRight = temp1
+				player[currentPlayer].hitboxLeft *= -1
+				player[currentPlayer].hitboxRight *= -1
+			end if
+		end if
+
+		if temp0 == false
+			// Default to regular hitbox
+			player[currentPlayer].hitboxTop = C_BOX
+			player[currentPlayer].hitboxBottom = C_BOX
+			player[currentPlayer].hitboxLeft = C_BOX
+			player[currentPlayer].hitboxRight = C_BOX
+		end if
+	end if	
 end event
 
 event ObjectDraw

@@ -72,5 +72,8 @@
 
   <sounds>
     <soundfx name="Wega" path="Global/IntroSound.wav" />
+    <soundfx name="Hammer Hit" path="Global/HammerHit.wav" />
+    <soundfx name="Hammer Dash" path="Global/HammerDash.wav" />
+    <soundfx name="Hammer Jump" path="Global/HammerJump.wav" />
   </sounds>  
 </game>
