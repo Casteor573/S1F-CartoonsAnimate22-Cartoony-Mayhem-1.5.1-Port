@@ -522,7 +522,8 @@ end function
 
 event ObjectMain
 	if object.state == 0
-		rand(object.value14, 2)
+		rand(object.value14, 3)
+	//	object.value14 = 2
 		object.inkEffect = INK_BLEND
 		object.state = control.extras
 		achieve.yoffset = 224
@@ -570,6 +571,17 @@ event ObjectDraw
 			temp6 += 20
 			DrawSpriteScreenXY(261, temp5, temp6)
 		break
+		case 2
+			temp5 = screen.xcenter
+			temp5 += 90
+			temp6 = screen.ycenter
+			temp6 += 20
+			DrawSpriteScreenXY(262, temp5, temp6)
+
+			temp6 -= 38
+			temp5 += 15
+			DrawSpriteScreenXY(263, temp5, temp6)			
+		break		
 	end switch	
 
 	
@@ -1053,5 +1065,8 @@ event ObjectStartup
 	SpriteFrame(120, 0, 36, 28, 420, 368) //254 mobile Chara Select Amy
 
 	SpriteFrame(0, 0, 70, 57, 814, 132) //260 knuckles emerald
-	SpriteFrame(0, 0, 63, 39, 756, 210) //260 knuckles emerald
+	SpriteFrame(0, 0, 63, 39, 756, 210) //261 stop fighting
+
+	SpriteFrame(0, 0, 29, 39, 579, 178) //262 stop fighting
+	SpriteFrame(0, 0, 48, 77, 756, 132) //263 stop fighting		
 end event
