@@ -2654,62 +2654,66 @@ function PlayerObject_HandleGround
 
 				switch object.propertyValue
 					case 0
-						if PlayerObject_SuperState == 0
-							switch saved.SonicBored
-							case 0
-								object.animation = ANI_WAITING
-							break
-							case 1	//sonic 2
-								object.animation = ANI_WAITING
-								object.value1++
-								if object.value1 == 0x4B0
-									object.value1 = 0
-									object.state = PlayerObject_HandleBored2
-								end if							
-							break	
-							case 2 //sonic 3
-								object.animation = 53
-							break	
-							case 3 //sonic 3 sleep
-								object.animation = 54
-							break		
-							case 4 //sonic Mania
-								object.animation = ANI_WAITING
-								object.value1++
-								if object.value1 == 0x4B0
-									object.value1 = 0
-									object.state = PlayerObject_HandleBored2
-								end if
-							break	
-							case 5 //sonic 2 GG
-								object.animation = 56
-							break
-							case 6 //sonic Triple Trouble
-								object.animation = 57
-							break	
-							case 7 //sonic Custom
-								object.animation = 58
-							break			
-							case 8 //was chilli dog but that was too many frames lmao chaotix
-								object.animation = 59
-							break	
-							case 9 //sonic 1
-								object.animation = 60
-							break																															
-							end switch	
-						else
-							switch saved.SuperSonicWait
-							case 0
-								object.animation = ANI_WAITING
-							break
-							case 1	//sonic 2
-								if PlayerObject_SuperState == 1
-									object.animation = 46
-								else
+						if player.isPlayer2 == 0
+							if PlayerObject_SuperState == 0
+								switch saved.SonicBored
+								case 0
 									object.animation = ANI_WAITING
-								end if	
-							break
-							end switch
+								break
+								case 1	//sonic 2
+									object.animation = ANI_WAITING
+									object.value1++
+									if object.value1 == 0x4B0
+										object.value1 = 0
+										object.state = PlayerObject_HandleBored2
+									end if							
+								break	
+								case 2 //sonic 3
+									object.animation = 53
+								break	
+								case 3 //sonic 3 sleep
+									object.animation = 54
+								break		
+								case 4 //sonic Mania
+									object.animation = ANI_WAITING
+									object.value1++
+									if object.value1 == 0x4B0
+										object.value1 = 0
+										object.state = PlayerObject_HandleBored2
+									end if
+								break	
+								case 5 //sonic 2 GG
+									object.animation = 56
+								break
+								case 6 //sonic Triple Trouble
+									object.animation = 57
+								break	
+								case 7 //sonic Custom
+									object.animation = 58
+								break			
+								case 8 //was chilli dog but that was too many frames lmao chaotix
+									object.animation = 59
+								break	
+								case 9 //sonic 1
+									object.animation = 60
+								break																															
+								end switch	
+							else
+								switch saved.SuperSonicWait
+								case 0
+									object.animation = ANI_WAITING
+								break
+								case 1	//sonic 2
+									if PlayerObject_SuperState == 1
+										object.animation = 46
+									else
+										object.animation = ANI_WAITING
+									end if	
+								break
+								end switch
+							end if	
+						else
+						object.animation = ANI_WAITING
 						end if	
 					break
 					case 1
@@ -2898,6 +2902,7 @@ function PlayerObject_HandleGround
 
 				switch object.propertyValue
 				case 0
+				if player.isPlayer2 == 0
 					if PlayerObject_SuperState == 1	//if ur super
 						if object.floorSensorC == 0
 							if object.floorSensorR == 0
@@ -3020,6 +3025,20 @@ function PlayerObject_HandleGround
 							break																			
 						end switch
 					end if	
+				else
+					if object.floorSensorC == 0
+						if object.floorSensorR == 0
+							object.value1 = 0
+							object.animation = ANI_FLAILING1
+							object.direction = FLIP_NONE
+						end if
+						if object.floorSensorL == 0
+							object.value1 = 0
+							object.animation = ANI_FLAILING1
+							object.direction = FLIP_X
+						end if
+					end if
+				end if	
 				break
 				case 1
 				case 5
@@ -3150,6 +3169,7 @@ function PlayerObject_HandleGround
 
 			switch object.propertyValue
 				case 0 //Sonic
+					if player.isPlayer2 == 0
 					if PlayerObject_SuperState == 1
 
 						switch saved.SuperSonicSkid
@@ -3200,6 +3220,9 @@ function PlayerObject_HandleGround
 						break
 						end switch
 					end if 	
+					else
+						object.animation = ANI_SKIDDING
+					end if
 				break
 				case 1
 					switch saved.TailsSkid
@@ -4141,6 +4164,7 @@ function PlayerObject_LookingUp
 		end if
 		switch object.propertyValue
 			case 0
+				if player.isPlayer2 == 0
 				if PlayerObject_SuperState == 0
 					switch saved.SonicUp
 					case 0
@@ -4153,6 +4177,9 @@ function PlayerObject_LookingUp
 				else
 					object.animation = ANI_LOOKINGUP
 				end if	
+				else
+					object.animation = ANI_LOOKINGUP
+				end if
 			break
 			default
 				object.animation = ANI_LOOKINGUP
@@ -4420,6 +4447,7 @@ function PlayerObject_Crouching
 
 		switch object.propertyValue
 			case 0
+				if player.isPlayer2 == 0
 				if PlayerObject_SuperState == 0
 					switch saved.SonicDown
 					case 0
@@ -4432,6 +4460,9 @@ function PlayerObject_Crouching
 				else
 					object.animation = ANI_LOOKINGDOWN
 				end if		
+				else
+					object.animation = ANI_LOOKINGDOWN
+				end if
 			break
 			default
 				object.animation = ANI_LOOKINGDOWN
@@ -5548,6 +5579,7 @@ function PlayerObject_Hurt
 
 	switch object.propertyValue
 		case 0
+			if player.isPlayer2 == 0
 			if PlayerObject_SuperState == 0
 			switch saved.SonicHurtAnim
 				case 0
@@ -5575,6 +5607,9 @@ function PlayerObject_Hurt
 						object.animation = 52
 					break
 				end switch
+			end if
+			else
+				object.animation = ANI_HURT
 			end if
 		break	
 		case 2
@@ -5812,6 +5847,7 @@ function PlayerObject_Death
 		if object.animation != 46
 			switch object.propertyValue 
 				case 0
+				if player.isPlayer2 == 0
 					if PlayerObject_SuperState == 0
 					switch saved.SonicDeath
 						case 0
@@ -5830,6 +5866,9 @@ function PlayerObject_Death
 					else
 						object.animation = ANI_DYING
 					end if
+				else
+					object.animation = ANI_DYING
+				end if	
 				break
 				case 1
 					switch saved.TailsDeath
@@ -5928,7 +5967,8 @@ end function
 function PlayerObject_Drown
 	switch object.propertyValue 
 		case 0
-			switch saved.SonicDeath
+		if player.isPlayer2 == 0
+			switch saved.SonicDrown
 				case 0
 					object.animation = ANI_DROWNING
 				break
@@ -5942,6 +5982,9 @@ function PlayerObject_Drown
 					object.animation = ANI_DROWNING
 				break
 			end switch
+		else
+			object.animation = ANI_DROWNING
+		end if	
 		break
 		case 1
 			switch saved.TailsDrown
@@ -6331,6 +6374,7 @@ function PlayerObject_MoveAnimate
 	if temp0 < 0x5F5C2
 		switch object.propertyValue
 			case 0
+				if player.isPlayer2 == 0
 				if PlayerObject_SuperState == 1
 					switch saved.SuperSonicWalk
 					case 0
@@ -6365,6 +6409,9 @@ function PlayerObject_MoveAnimate
 					break								
 					end switch
 				end if	
+			else
+			object.animation = ANI_WALKING
+			end if
 			break
 			case 1
 				if player.isPlayer2 == 0
