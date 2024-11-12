@@ -523,7 +523,7 @@ end function
 event ObjectMain
 	if object.state == 0
 		rand(object.value14, 13)	//12 total
-		object.value14 = 12
+	//	object.value14 = 12
 		object.inkEffect = INK_BLEND
 		object.state = control.extras
 		achieve.yoffset = 224
