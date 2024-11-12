@@ -453,119 +453,104 @@ event ObjectDraw
 	DrawSpriteScreenXY(12, 25, 225)
 
 
-	if object.state == LOGO_IDLE_TAILS
-		object.fade -= 5
-	else
-		object.fade = 256
-	end if		
-	DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, color2, object.fade)
+		if object.state == LOGO_IDLE_TAILS
+			object.fade -= 5
+		else
+			object.fade = 256
+		end if		
+		DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, color2, object.fade)
 
-	if object[+1].value10 == 1
-		DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, 255)
-	end if
-	temp0 = 1
+	temp0 = object.value19
+	temp0 += screen.xcenter
+	object[+1].xpos = temp0
 
-
-	// Have to use a temp value workaround due to compiler shenanigans
-	// Normally, it's just `switch stage.playerListPos` or `switch object.character`, but we can't wrap a switch start with platform checks so this is the next best thing
-
-	// Draw Logo (Top Half)
-	if temp0 != false
-		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
+	if object.state < LOGO_FINGERWIGGLE_SONIC
+		DrawSpriteScreenXY(9, temp0, object.ypos)
 	end if
 
 	switch object.state
 	case LOGO_SETUP_SONIC
-		screen.xoffset 		 = 0
-
-		object.priority 	 = PRIORITY_ACTIVE
-		object.timer		 = 0x100
-		stage.activeLayer[0] = 1 //set bg to lowest layer
+		screen.xoffset = 0
+		object.priority = PRIORITY_ACTIVE
+		object.value0 = 256
+		stage[0].activeLayer = 1
 		object.state++
-
-		object[+1].type 	= TypeName[Start Message]
+		SetClassicFade(0, 0, 0, 255)
+		object[+1].type = TypeName[Start Message]
 		object[+1].priority = PRIORITY_ACTIVE
-		object[+1].xpos 	= screen.xcenter
-		object[+1].drawOrder 	= 2
-		
-	
+		object[+1].xpos = temp0
 		object[+1].ypos = 192
-		
-		Setclassicfade(0x00, 0x00, 0x00, 0xFF)
 		break
 
 	case LOGO_FADEIN_SONIC
 		screen.xoffset += 2
-
-		if object.timer > 0
-			object.timer -= 8
+		if object.value0 > 0
+			object.value0 -= 8
 		else
 			PlayMusic(0)
 			object.state++
 		end if
-
-		Setclassicfade(0x00, 0x00, 0x00, object.timer)
+		SetClassicFade(0, 0, 0, object.value0)
 		break
 
 	case LOGO_RISEDELAY_SONIC
 		screen.xoffset += 2
-
-		object.timer++
-		if object.timer == 38
-			object.timer 		= 0
-			object.playerPos.y 	= 186
-			object.frame 		= 0
+		object.value0++
+		if object.value0 == 38
+			object.value0 = 0
+			object.value2 = 186
+			object.frame = 0
 			object.state++
 		end if
 		break
 
 	case LOGO_RISE_SONIC
 		screen.xoffset += 2
-
-		object.playerPos.y -= 8
-		if object.playerPos.y < 144
-			object.frame = 1
+		if object[+1].value10 == 0
+			object.value2 -= 8
+			if object.value2 < 144
+				object.frame = 1
+			end if
+			if object.value2 <= 112
+				object.value2 = 112
+				object.state++
+			end if
 		end if
-
-		if object.playerPos.y <= 112
-			object.playerPos.y = 112
-			object.state++
+		if object.value2 < 186
+			DrawSpriteScreenXY(object.frame, temp0, object.value2)
 		end if
-
-		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
 		break
 
 	case LOGO_ANIMATE_SONIC
 		screen.xoffset += 2
-
-		object.timer++
-		if object.timer == 8
-			object.frame++
+		object.value0++
+		if object.value0 == 8
+			if object[+1].value10 == 0
+				object.frame++
+			end if
 			if object.frame >= 7
 				object.frame = 7
-				object.state = LOGO_PREPLOGOAPPEAR_TAILS		
+				object.state = 6
 			end if
-			object.timer = 0
+			object.value0 = 0
 		end if
-
-		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
+		DrawSpriteScreenXY(object.frame, temp0, object.value2)
 		break
 
 	case LOGO_FINGERWIGGLE_SONIC
 		screen.xoffset += 2
-		
-
-		object.timer++
-		if object.timer == 8
-			object.frame++
+		object.value0++
+		if object.value0 == 8
+			if object[+1].value10 == 0
+				object.frame++
+			end if
 			if object.frame > 8
 				object.frame = 7
 			end if
-			object.timer = 0
+			object.value0 = 0
 		end if
-
-		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
-		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
+		DrawSpriteScreenXY(9, temp0, object.ypos)
+		DrawSpriteScreenXY(object.frame, temp0, object.value2)
 		break
 	case LOGO_PREPLOGOAPPEAR_TAILS
 		screen.xoffset += 2

@@ -1,37 +1,123 @@
 // ----------------------------------
-// RSDK Project: Sonic 1/Sonic 2
+// RSDK Project: Sonic 1
 // Script Description: Logo Object
 // Script Author: Christian Whitehead/Simon Thomley
 // Unpacked by Rubberduckycooly's script unpacker
 // ----------------------------------
 
-//-------Aliases-------//
-private alias 3 : TYPE_LOGO
+// ========================
+// Aliases
+// ========================
 
-// Function declarations
-reserve function Logo_Function1
+private alias object.value0  : object.timer
+private alias object.value1  : object.playerPos.x
+private alias object.value2  : object.playerPos.y
+private alias object.value3  : object.paletteTimer
+private alias object.value4  : object.arrayPos
+private alias object.value5  : object.armFrame
+private alias object.value6  : object.armPos.x
+private alias object.value7  : object.armPos.y
+private alias object.value8  : object.charTitlePos
+private alias object.value9  : object.speedPercent
+private alias object.value10 : object.disablePaletteRotation // Not actually used as far as I can tell
+private alias object.value11 : object.player2Pos.x
+private alias object.value12 : object.player2Pos.y
+private alias object.value13 : object.p2Frame
+private alias object.value14 : object.levelSelectCheatPos
+private alias object.value15 : object.debugModeCheatPos
+private alias object.value16 : object.regionSwitchCheatPos
+private alias object.value17 : object.character
+private alias object.value18 : object.fade
+
+// Alias for the character workaround
+private alias temp1 : temp.titleCharacter
+
+// States
+// The first 3 states are identical so there's really not much reason to have em seperate but it is what it is
+
+// Sonic States
+private alias 0  : LOGO_SETUP_SONIC
+private alias 1  : LOGO_FADEIN_SONIC
+private alias 2  : LOGO_RISEDELAY_SONIC
+private alias 3  : LOGO_RISE_SONIC
+private alias 4  : LOGO_ANIMATE_SONIC
+private alias 5  : LOGO_FINGERWIGGLE_SONIC
+private alias 6  : LOGO_P2TEXTAPPEAR_SONIC
+private alias 7  : LOGO_MOVELEFT_SONIC
+private alias 8  : LOGO_RISEP2_SONIC
+private alias 9  : LOGO_ANIMATEP2_SONIC
+private alias 10 : LOGO_ARMAPPEARP2_SONIC
+private alias 11 : LOGO_ANIMATEP1_SONIC
+
+// Tails States
+private alias 0  : LOGO_SETUP_TAILS
+private alias 1  : LOGO_FADEIN_TAILS
+private alias 2  : LOGO_RISEDELAY_TAILS
+private alias 3  : LOGO_RISE_TAILS
+private alias 4  : LOGO_ANIMATE_TAILS
+private alias 5  : LOGO_ARMAPPEAR_TAILS
+private alias 6  : LOGO_PREPLOGOAPPEAR_TAILS
+private alias 7  : LOGO_SHOWLOGO_TAILS
+private alias 8  : LOGO_IDLE_TAILS
+
+// Knux States
+private alias 0  : LOGO_SETUP_KNUX
+private alias 1  : LOGO_FADEIN_KNUX
+private alias 2  : LOGO_RISEDELAY_KNUX
+private alias 3  : LOGO_RISE_KNUX
+private alias 4  : LOGO_ANIMATE_KNUX
+private alias 5  : LOGO_ARMAPPEAR_KNUX
+private alias 6  : LOGO_ANIMATEARM_KNUX
+private alias 7  : LOGO_MOVEARM_KNUX
+private alias 8  : LOGO_PREPLOGOAPPEAR_KNUX
+private alias 9  : LOGO_ARMAPPEAR2_KNUX
+private alias 10 : LOGO_ANIMATEARM2_KNUX
+private alias 11 : LOGO_MOVEARM2_KNUX
+private alias 12 : LOGO_SHOWLOGO_KNUX
+private alias 13 : LOGO_IDLE_KNUX
+
+// Game Modes
+private alias 0 : MODE_NOSAVE
+
+// Player List Pos Aliases
+private alias 3 : PLAYER_SONIC_AND_TAILS
+
+
+// ========================
+// Function Declarations
+// ========================
+
+reserve function Logo_CheckButtonCheatCodes
 reserve function AnimatedForever
 
 
+// ========================
 // Tables
-public table Logo_table0
+// ========================
+
+private table Logo_playerPalette
 	0x6060A0, 0x80A0E0, 0xE08000, 0xE0C080, 0xA04000, 0x600000, 0xE02080, 0xE00040, 0x800000, 0x806080, 0xA08060, 0xE0C0A0, 0x80A0A0, 0xA04020
 end table
 
-public table Logo_table1
+private table Logo_tailsBodyOffsets
 	-50, -40, -53, -56, -58, -68, -60, -74, -62, -78, -63, -79, -64, -80
 end table
 
-public table Logo_table2
+private table Logo_tailsArmOffsets
 	5, -32, 6, -31
 end table
+
+
+// ========================
+// Function Definitions
+// ========================
 
 function AnimatedForever
 	if object.state > 4
 		if object.value21 < 19
-			temp1 = object.value21
-			temp1 += 13
-			DrawSpriteScreenXY(temp1, temp0, object.ypos)
+			temp0 = object.value21
+			temp0 += 13
+			DrawSpriteScreenXY(temp0, screen.xcenter, object.ypos)
 			object.value22++
 			object.value22 &= 1
 			if object.value22 == 1
@@ -41,8 +127,7 @@ function AnimatedForever
 	end if
 end function
 
-
-function Logo_Function1
+function Logo_CheckButtonCheatCodes
 	temp0 = 0
 	if inputPress.up == 1
 		temp0 = 1
@@ -65,16 +150,13 @@ function Logo_Function1
 	if inputPress.buttonC == 1
 		temp0 = 7
 	end if
-	
 	switch object.value14
 	case 0
 		if temp0 == 1
 			object.value14++
 		else
 			if temp0 != 0
-				if temp0 != 7
-					object.value14 = 0
-				end if
+				object.value14 = 0
 			end if
 		end if
 		break
@@ -83,9 +165,7 @@ function Logo_Function1
 			object.value14++
 		else
 			if temp0 != 0
-				if temp0 != 7
-					object.value14 = 0
-				end if
+				object.value14 = 0
 			end if
 		end if
 		break
@@ -94,9 +174,7 @@ function Logo_Function1
 			object.value14++
 		else
 			if temp0 != 0
-				if temp0 != 7
-					object.value14 = 0
-				end if
+				object.value14 = 0
 			end if
 		end if
 		break
@@ -106,23 +184,95 @@ function Logo_Function1
 			//object.value14 = 0
 			options.stageSelectFlag = 1
 			PlaySfx(SfxName[Ring L], 0)
-			if object.value15 >= 2
-				stage.debugMode = 1
-			end if
 		else
 			if temp0 != 0
-				if temp0 != 7
-					object.value14 = 0
-				end if
+				object.value14 = 0
 			end if
 		end if
 		break
 	end switch
-	
-	if temp0 == 7
-		object.value15++
-	end if
-	
+	switch object.value15
+	case 0
+		if temp0 == 1
+			object.value15++
+		else
+			if temp0 != 0
+				object.value15 = 0
+			end if
+		end if
+		break
+	case 1
+		if temp0 == 7
+			object.value15++
+		else
+			if temp0 != 0
+				object.value15 = 0
+			end if
+		end if
+		break
+	case 2
+		if temp0 == 2
+			object.value15++
+		else
+			if temp0 != 0
+				object.value15 = 0
+			end if
+		end if
+		break
+	case 3
+		if temp0 == 7
+			object.value15++
+		else
+			if temp0 != 0
+				object.value15 = 0
+			end if
+		end if
+		break
+	case 4
+		if temp0 == 3
+			object.value15++
+		else
+			if temp0 != 0
+				object.value15 = 0
+			end if
+		end if
+		break
+	case 5
+		if temp0 == 7
+			object.value15++
+		else
+			if temp0 != 0
+				object.value15 = 0
+			end if
+		end if
+		break
+	case 6
+		if temp0 == 4
+			object.value15++
+		else
+			if temp0 != 0
+				object.value15 = 0
+			end if
+		end if
+		break
+	case 7
+		if temp0 == 7
+			object.value15++
+			//object.value15 = 0
+			stage.debugMode = 1
+			PlaySfx(SfxName[Ring L], 0)
+			
+			//also activate level select
+			object.value14 = object.value15
+			options.stageSelectFlag = 1
+			
+		else
+			if temp0 != 0
+				object.value15 = 0
+			end if
+		end if
+		break
+	end switch
 	switch object.value16
 	case 0
 		if temp0 == 1
@@ -169,7 +319,23 @@ function Logo_Function1
 	
 	switch object.value17
 	case 0
+		if temp0 == 3
+			object.value17++
+		else
+			if temp0 != 0
+				object.value17 = 0
+			end if
+		end if
+		break
 	case 1
+		if temp0 == 3
+			object.value17++
+		else
+			if temp0 != 0
+				object.value17 = 0
+			end if
+		end if
+		break
 	case 2
 		if temp0 == 3
 			object.value17++
@@ -180,7 +346,23 @@ function Logo_Function1
 		end if
 		break
 	case 3
+		if temp0 == 4
+			object.value17++
+		else
+			if temp0 != 0
+				object.value17 = 0
+			end if
+		end if
+		break
 	case 4
+		if temp0 == 4
+			object.value17++
+		else
+			if temp0 != 0
+				object.value17 = 0
+			end if
+		end if
+		break
 	case 5
 		if temp0 == 4
 			object.value17++
@@ -191,6 +373,14 @@ function Logo_Function1
 		end if
 		break
 	case 6
+		if temp0 == 1
+			object.value17++
+		else
+			if temp0 != 0
+				object.value17 = 0
+			end if
+		end if
+		break
 	case 7
 		if temp0 == 1
 			object.value17++
@@ -221,15 +411,12 @@ function Logo_Function1
 		end if
 		break
 	end switch
-	
-	if temp0 == 3
-		object.value18++
-		if object.value18 >= 8
-			object.value19 -= 8
-			object.value18 = 0
-		end if
-	end if
 end function
+
+
+// ========================
+// Events
+// ========================
 
 
 event ObjectMain
@@ -245,114 +432,228 @@ event ObjectMain
 			RotatePalette(0, 192, 195, 1)
 		end if
 	end if
-	if object[+1].value10 == 0
-		CallFunction(Logo_Function1)
+	if options.gameMode == 0
+		//if object.state > 3
+		if object[+1].value10 == 0
+			CallFunction(Logo_CheckButtonCheatCodes)
+		end if
+		//end if
 	end if
 end event
 
-
 event ObjectDraw
-	temp0 = object.value19
-	temp0 += screen.xcenter
-	object[+1].xpos = temp0
-	DrawSpriteScreenXY(9, temp0, object.ypos)
+	// Copyright Sprite
+	temp0 = screen.xsize
+	temp0 -= 96
+	//DrawSpriteScreenXY(38, screen.xcenter, object.ypos)	
+	CallFunction(AnimatedForever)
+	temp0 = screen.xsize
+	temp0 -= 96
+	DrawSpriteScreenXY(11, temp0, 216)
+	DrawSpriteScreenXY(12, 25, 225)
+
+
+	if object.state == LOGO_IDLE_TAILS
+		object.fade -= 5
+	else
+		object.fade = 256
+	end if		
+	DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, color2, object.fade)
+
+	if object[+1].value10 == 1
+		DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, 255)
+	end if
+	temp0 = 1
+
+
+	// Have to use a temp value workaround due to compiler shenanigans
+	// Normally, it's just `switch stage.playerListPos` or `switch object.character`, but we can't wrap a switch start with platform checks so this is the next best thing
+
+	// Draw Logo (Top Half)
+	if temp0 != false
+		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
+	end if
 
 	switch object.state
-	case 0
-		screen.xoffset = 0
-		object.priority = PRIORITY_ACTIVE
-		object.value0 = 256
-		stage[0].activeLayer = 1
+	case LOGO_SETUP_SONIC
+		screen.xoffset 		 = 0
+
+		object.priority 	 = PRIORITY_ACTIVE
+		object.timer		 = 0x100
+		stage.activeLayer[0] = 1 //set bg to lowest layer
 		object.state++
-		SetClassicFade(0, 0, 0, 255)
-		object[+1].type = TypeName[Start Message]
+
+		object[+1].type 	= TypeName[Start Message]
 		object[+1].priority = PRIORITY_ACTIVE
-		object[+1].xpos = temp0
+		object[+1].xpos 	= screen.xcenter
+		object[+1].drawOrder 	= 2
+		
+	
 		object[+1].ypos = 192
+		
+		Setclassicfade(0x00, 0x00, 0x00, 0xFF)
 		break
-	case 1
+
+	case LOGO_FADEIN_SONIC
 		screen.xoffset += 2
-		if object.value0 > 0
-			object.value0 -= 8
+
+		if object.timer > 0
+			object.timer -= 8
 		else
 			PlayMusic(0)
 			object.state++
 		end if
-		SetClassicFade(0, 0, 0, object.value0)
+
+		Setclassicfade(0x00, 0x00, 0x00, object.timer)
 		break
-	case 2
+
+	case LOGO_RISEDELAY_SONIC
 		screen.xoffset += 2
-		object.value0++
-		if object.value0 == 38
-			object.value0 = 0
-			object.value2 = 186
-			object.frame = 0
+
+		object.timer++
+		if object.timer == 38
+			object.timer 		= 0
+			object.playerPos.y 	= 186
+			object.frame 		= 0
 			object.state++
 		end if
 		break
-	case 3
+
+	case LOGO_RISE_SONIC
 		screen.xoffset += 2
-		if object[+1].value10 == 0
-			object.value2 -= 8
-			if object.value2 < 144
-				object.frame = 1
-			end if
-			if object.value2 <= 112
-				object.value2 = 112
-				object.state++
-			end if
+
+		object.playerPos.y -= 8
+		if object.playerPos.y < 144
+			object.frame = 1
 		end if
-		if object.value2 < 186
-			DrawSpriteScreenXY(object.frame, temp0, object.value2)
+
+		if object.playerPos.y <= 112
+			object.playerPos.y = 112
+			object.state++
 		end if
+
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
 		break
-	case 4
+
+	case LOGO_ANIMATE_SONIC
 		screen.xoffset += 2
-		object.value0++
-		if object.value0 == 8
-			if object[+1].value10 == 0
-				object.frame++
-			end if
+
+		object.timer++
+		if object.timer == 8
+			object.frame++
 			if object.frame >= 7
 				object.frame = 7
-				object.state++
+				object.state = LOGO_PREPLOGOAPPEAR_TAILS		
 			end if
-			object.value0 = 0
+			object.timer = 0
 		end if
-		DrawSpriteScreenXY(object.frame, temp0, object.value2)
+
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
 		break
-	case 5
+
+	case LOGO_FINGERWIGGLE_SONIC
 		screen.xoffset += 2
-		object.value0++
-		if object.value0 == 8
+		
+
+		object.timer++
+		if object.timer == 8
+			object.frame++
+			if object.frame > 8
+				object.frame = 7
+			end if
+			object.timer = 0
+		end if
+
+		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
+		break
+	case LOGO_PREPLOGOAPPEAR_TAILS
+		screen.xoffset += 2
+		object.state++
+			
+
+
+		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
+		break
+
+	case LOGO_SHOWLOGO_TAILS
+		screen.xoffset += 2
+
+	
+		if object.charTitlePos >= 50
+			if object.speedPercent == 0
+				object.timer++
+				if object.timer == 3
+					object.charTitlePos = 50
+					object.state++
+				end if
+				object.speedPercent = 1
+			end if
+
+			object.yvel -= 0x4000
+			if object.yvel > 0
+				object.yvel -= 0x8000
+			end if
+		else
+			object.speedPercent = 0
+			object.yvel += 0x6000
+			if object.yvel < 0
+				object.yvel += 0x8000
+			end if
+		end if
+
+		object.speedPercent += object.yvel
+		temp0 = object.speedPercent
+		temp0 >>= 16
+		object.charTitlePos += temp0
+		object.speedPercent &= 0xFFFF
+
+		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
+
+	
+		DrawSpriteScreenXY(32, screen.xcenter, object.charTitlePos)
+	
+
+	
+		break
+
+	case LOGO_IDLE_TAILS
+		screen.xoffset += 2
+
+		object.timer++
+		if object.timer == 8
 			if object[+1].value10 == 0
 				object.frame++
 			end if
 			if object.frame > 8
 				object.frame = 7
 			end if
-			object.value0 = 0
+			object.timer = 0
 		end if
-		DrawSpriteScreenXY(9, temp0, object.ypos)
-		DrawSpriteScreenXY(object.frame, temp0, object.value2)
+
+		DrawSpriteScreenXY(9, screen.xcenter, object.ypos)
+		DrawSpriteScreenXY(object.frame, screen.xcenter, object.playerPos.y)
+
+	
+		DrawSpriteScreenXY(32, screen.xcenter, object.charTitlePos)
 		break
+		
 	end switch
 
-	DrawSpriteScreenXY(10, temp0, object.ypos)
-	CallFunction(AnimatedForever)
-	temp0 = object.value19
-	temp0 += screen.xsize
-	temp0 -= 96
-	DrawSpriteScreenXY(11, temp0, 216)
-	temp0 = object.value19
-	temp0 += 25
-	DrawSpriteScreenXY(12, temp0, 225)
+	// Logo (Bottom Half)
+	DrawSpriteScreenXY(10, screen.xcenter, object.ypos)
+
+
+
 end event
 
 
 event ObjectStartup
 	LoadSpriteSheet("Title/Title.gif")
-	SetMusicTrack("Titlescreen.ogg", 0, 0)
+	SetMusicTrack("Titlescreen_Alt.ogg", 0, false)
+
 	SpriteFrame(-33, -74, 65, 64, 1, 1) //0 Sonic
 	SpriteFrame(-33, -74, 65, 88, 1, 1)
 	SpriteFrame(-34, -66, 74, 88, 67, 1)
@@ -362,6 +663,13 @@ event ObjectStartup
 	SpriteFrame(-36, -76, 81, 88, 370, 1)
 	SpriteFrame(-36, -76, 81, 88, 1, 90)
 	SpriteFrame(-36, -76, 81, 88, 83, 90)
+
+
+
+
+
+
+
 	SpriteFrame(-128, 42, 256, 74, 255, 90) //9 Logo Top
 	SpriteFrame(-128, 112, 256, 74, 255, 167) //10 Logo Bottom
 	SpriteFrame(0, 0, 71, 17, 182, 210) //11 Copyright Sega
@@ -388,23 +696,35 @@ event ObjectStartup
 	SpriteFrame(19, 148, 46, 7, 48, 351) //30
 	SpriteFrame(19, 148, 46, 7, 95, 351) //31
 	
-	
-	
+	SpriteFrame(-72, -40, 150, 45, 1, 359) //32	
+
+
+	// Setup Player Palette Colours
 	temp0 = 208
 	temp1 = 0
 	while temp1 < 14
-		GetTableValue(temp2, temp1, Logo_table0)
+		GetTableValue(temp2, temp1, Logo_playerPalette)
 		SetPaletteEntry(0, temp0, temp2)
 		temp0++
 		temp1++
 	loop
 end event
 
+
+// ========================
+// Editor Events
+// ========================
+
 event RSDKDraw
 	DrawSprite(0)
+	DrawSprite(1)
 end event
 
+
 event RSDKLoad
-	LoadSpriteSheet("Global/Display.gif")
-	SpriteFrame(-16, -16, 32, 32, 1, 143)
+	LoadSpriteSheet("Title/Title.gif")
+	SpriteFrame(-128, 42, 256, 74, 255, 90) 	// Logo (Top)			- #0
+	SpriteFrame(-128, 112, 256, 74, 255, 167) 	// Logo (Bottom)		- #1
+	
+	SetVariableAlias(ALIAS_VAR_PROPVAL, "unused")
 end event
