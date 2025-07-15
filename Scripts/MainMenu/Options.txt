@@ -1476,12 +1476,12 @@ function ca22.menu
 			if inputPress.left == 1
 				saved.SonicSkid--
 				if saved.SonicSkid < 0
-					saved.SonicSkid  = 7
+					saved.SonicSkid  = 6
 				end if
 			end if
 			if inputPress.right == 1
 				saved.SonicSkid++
-				if saved.SonicSkid > 7
+				if saved.SonicSkid > 6
 					saved.SonicSkid = 0
 				end if
 			end if
@@ -4533,9 +4533,6 @@ function ca22.draw
 	case 6
 		text.drawline = 196 //Crackers
 		break			
-	case 7
-		text.drawline = 197 //Pics & Pixels
-		break				
 	end switch
 	CallFunction(option.text)
 	text.ypos += 21
