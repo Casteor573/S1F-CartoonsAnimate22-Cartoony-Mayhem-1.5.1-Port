@@ -428,10 +428,10 @@ end event
 if stage.playerListPos == 0
 	switch saved.SonicEndingPose
 	case 0
-	SpriteFrame(-18, -27, 45, 71, 36, 184)	//end pose 1
+	SpriteFrame(-18, -27, 46, 71, 35, 184)	//end pose 1
 	break
 	default
-	SpriteFrame(-25, -28, 45, 72, 82, 183) //3	Sonic 2
+	SpriteFrame(-25, -28, 46, 72, 81, 184) //3	Sonic 2
 	break
 	
 	end switch
@@ -443,10 +443,10 @@ if stage.playerListPos == 0
 	SpriteFrame(-56, -68, 176, 136, 3, 256) //3	Sonic 1
 	break
 	case 1
-	SpriteFrame(-45, -48, 77, 96, 261, 197) //3	Sonic 2
+	SpriteFrame(-45, -48, 77, 99, 261, 194) //3	Sonic 2
 	break
 	case 2
-	SpriteFrame(-36, -28, 71, 87, 184, 99) //3	Sonic 3
+	SpriteFrame(-36, -28, 71, 90, 184, 99) //3	Sonic 3
 	break	
 	case 3
 	SpriteFrame(-39, -55, 88, 128, 219, 294) //3	Sonic & Knuckles
