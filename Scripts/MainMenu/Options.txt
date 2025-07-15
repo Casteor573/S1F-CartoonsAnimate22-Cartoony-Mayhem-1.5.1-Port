@@ -4908,7 +4908,7 @@ function ca22.generaldraw
 		text.drawline = 285	//PEANUT BUTTER JELLY TIME
 		break		
 	case 4
-		text.drawline = 234	//Sonic Adventure Artwork
+		text.drawline = 41	//Sonic Adventure Artwork
 		break	
 	end switch
 	CallFunction(option.text)
