@@ -2825,7 +2825,14 @@ function PlayerObject_HandleGround
 							CallFunction(PlayerObject_SonicVictory)
 							break
 							case 3	//banana
-							object.animation = 103
+								object.animation = 103
+								if object.frame == 3
+									object.direction = 1
+								end if
+								if object.frame == 9
+									object.direction = 0
+								end if
+
 							break		
 							case 4 //adventure
 							object.animation = 104
@@ -3284,8 +3291,6 @@ function PlayerObject_HandleGround
 					object.animation = ANI_SKIDDING
 				break
 			end switch			
-
-		
 			object.animationSpeed = 0
 			player.skidding--
 			if ringTimer == 0
