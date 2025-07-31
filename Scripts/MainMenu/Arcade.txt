@@ -659,13 +659,13 @@ event ObjectStartup
 	//Character Heads
 	SpriteFrame(0, 0, 16, 13, 305, 69) //18  Empty	
 	SpriteFrame(0, 0, 16, 13, 254, 69) //19  Sonic
-	SpriteFrame(1, 0, 15, 13, 271, 69) //20  Tails
+	SpriteFrame(0, 0, 17, 13, 271, 69) //20  Tails
 	SpriteFrame(0, 0, 17, 13, 287, 69) //21  Knuckles
 	
 	//Character Menu
 	SpriteFrame(-80, 0, 78, 16, 253, 83) //22 Grey Peps
 	SpriteFrame(-80, 0, 17, 16, 332, 83) //23 Sonic Highlighted
-	SpriteFrame(-59, 1, 15, 15, 350, 84) //24 Tails Highlighted
+	SpriteFrame(-59, 0, 17, 16, 350, 83) //24 Tails Highlighted
 	SpriteFrame(-41, 1, 18, 15, 366, 84) //25 Knuckles Highlighted
 	
 	//Portraits
