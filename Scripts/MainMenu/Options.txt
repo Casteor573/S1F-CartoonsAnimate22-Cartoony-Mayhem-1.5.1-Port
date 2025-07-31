@@ -2080,12 +2080,12 @@ function ca22.tailsmenu
 			if inputPress.left == 1
 				saved.TailsRun--
 				if saved.TailsRun < 0
-					saved.TailsRun  = 3
+					saved.TailsRun  = 2
 				end if
 			end if
 			if inputPress.right == 1
 				saved.TailsRun++
-				if saved.TailsRun > 3
+				if saved.TailsRun > 2
 					saved.TailsRun = 0
 				end if
 			end if
@@ -5355,10 +5355,7 @@ function ca22.tailsdraw
 		text.drawline = 189	//Sonic 1
 		break		
 	case 2
-		text.drawline = 237	//CREATURE
-		break	
-	case 3
-		text.drawline = 231
+		text.drawline = 237
 		break				
 	end switch
 	CallFunction(option.text)

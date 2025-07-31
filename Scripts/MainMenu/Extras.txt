@@ -1148,8 +1148,8 @@ event ObjectStartup
 	
 	SpriteFrame(0, 0, 71, 14, 309, 304) //250 Chara Select bg
 	SpriteFrame(0, 0, 15, 14, 309, 289) //251 Chara Select Sonic
-	SpriteFrame(20, 0, 13, 14, 325, 289) //252 Chara Select Tails
-	SpriteFrame(36, 0, 16, 14, 339, 289) //253 Chara Select Knux
+	SpriteFrame(20, 0, 15, 14, 325, 289) //252 Chara Select Tails
+	SpriteFrame(37, 0, 15, 14, 340, 289) //253 Chara Select Knux
 	SpriteFrame(55, 0, 16, 14, 356, 289) //254 Chara Select Amy
 
 	SpriteFrame(0, 0, 158, 31, 309, 336) //250 mobile Chara Select bg

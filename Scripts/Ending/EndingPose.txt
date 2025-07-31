@@ -158,6 +158,13 @@ event ObjectMain
 		SetScreenFade(0, 0, 0, temp0)
 		break
 	case 5
+		if stage.playerListPos == 1
+			object.value2 = object.value0
+			object.value2 >>= 3
+			object.value2 %= 5
+			object.value2 += 36
+		end if
+
 		object.value0++
 		if object.value0 == 80
 			object.value0 = 0
@@ -188,6 +195,13 @@ event ObjectMain
 		end if
 		break
 	case 6
+		if stage.playerListPos == 1
+			object.value2 = object.value0
+			object.value2 >>= 3
+			object.value2 %= 5
+			object.value2 += 36
+		end if
+
 		object.frame = object.value0
 		object.frame >>= 2
 		object.frame &= 1
@@ -246,6 +260,7 @@ event ObjectMain
 	case 7
 		break
 	case 8
+
 		if object.value0 < 384
 			object.value0 += 6
 		else
@@ -263,6 +278,13 @@ event ObjectMain
 		SetScreenFade(color6, color7, color6, object.value0)
 		break
 	case 9
+		if stage.playerListPos == 1
+			object.value2 = object.value0
+			object.value2 >>= 3
+			object.value2 %= 5
+			object.value2 += 36
+		end if
+
 		if object.value0 > 0
 			object.value0 -= 16
 			SetScreenFade(color6, color7, color6, object.value0)
@@ -295,6 +317,13 @@ event ObjectMain
 		end if
 		break
 	case 10
+		if stage.playerListPos == 1
+			object.value2 = object.value0
+			object.value2 >>= 3
+			object.value2 %= 5
+			object.value2 += 36
+		end if
+
 		switch stage.playerListPos
 		case 0
 		case 3
@@ -335,6 +364,13 @@ event ObjectMain
 		end if
 		break
 	case 11
+		if stage.playerListPos == 1
+			object.value2 = object.value0
+			object.value2 >>= 3
+			object.value2 %= 5
+			object.value2 += 36
+		end if
+
 		object.value0++
 		if object.value0 == 60
 			object.value0 = 0
@@ -357,6 +393,14 @@ event ObjectMain
 		end if
 		break
 	case 12
+		if stage.playerListPos == 1
+			object.value2 = object.value0
+			object.value2 >>= 3
+			object.value2 %= 5
+			object.value2 += 36
+		end if
+
+
 		object.frame = object.value0
 		object.frame /= 10
 		object.frame &= 3

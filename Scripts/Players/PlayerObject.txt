@@ -6582,9 +6582,6 @@ function PlayerObject_MoveAnimate
 								case 2	//CREATURE RAHHHH
 									object.animation = 53
 								break	
-								case 3	//CREATURE RAHHHH
-									object.animation = 54
-								break	
 								default
 									object.animation = ANI_RUNNING
 								break					
