@@ -6397,9 +6397,6 @@ function PlayerObject_MoveAnimate
 					end switch			
 				else
 					switch saved.SonicWalk
-					case 0
-						object.animation = ANI_WALKING
-					break
 					case 1 //2
 						object.animation = 63
 					break				
@@ -6411,7 +6408,10 @@ function PlayerObject_MoveAnimate
 					break				
 					case 4	//gens
 						object.animation = 66
-					break								
+					break		
+					default
+						object.animation = ANI_WALKING
+					break											
 					end switch
 				end if	
 			else
@@ -6421,12 +6421,12 @@ function PlayerObject_MoveAnimate
 			case 1
 				if player.isPlayer2 == 0
 					switch saved.TailsWalk
-						default
-							object.animation = ANI_WALKING
-						break
 						case 1	//Sonic 1 Styled
 							object.animation = 50
 						break
+						default
+							object.animation = ANI_WALKING
+						break						
 					end switch
 				else
 					object.animation = ANI_WALKING
@@ -6435,12 +6435,12 @@ function PlayerObject_MoveAnimate
 			case 2
 				if player.isPlayer2 == 0
 					switch saved.KnuxWalkAnim
-						default
-							object.animation = ANI_WALKING
-						break
 						case 1	//Sonic 1 Styled
 							object.animation = 51
 						break
+						default
+							object.animation = ANI_WALKING
+						break						
 					end switch
 				else
 					object.animation = ANI_WALKING
@@ -6449,12 +6449,12 @@ function PlayerObject_MoveAnimate
 			case 5
 				if player.isPlayer2 == 0
 					switch saved.AmyWalkAnim
-						default
-							object.animation = ANI_WALKING
-						break
 						case 1	//Sonic 1 Styled
 							object.animation = 54
 						break
+						default
+							object.animation = ANI_WALKING
+						break						
 					end switch
 				else
 					object.animation = ANI_WALKING

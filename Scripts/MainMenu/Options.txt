@@ -2023,20 +2023,20 @@ function ca22.tailsmenu
 			menu.highlight--
 			if menu.highlight < 0
 				if saved.mobile == 1
-					menu.highlight = 9
+					menu.highlight = 8
 				else
-					menu.highlight = 9
+					menu.highlight = 8
 				end if
 			end if
 		else	
 			if inputPress.down == 1
 				menu.highlight++
 				if saved.mobile == 1
-					if menu.highlight > 9
+					if menu.highlight > 8
 						menu.highlight = 0
 					end if
 				else
-					if menu.highlight > 9
+					if menu.highlight > 8
 						menu.highlight = 0
 					end if
 				end if
@@ -2076,21 +2076,7 @@ function ca22.tailsmenu
 				end if
 			end if
 		break		
-		case 3 //Tails Walk	public alias saveRAM[527] : saved.TailsWalk
-			if inputPress.left == 1
-				saved.TailsWalk--
-				if saved.TailsWalk < 0
-					saved.TailsWalk  = 1
-				end if
-			end if
-			if inputPress.right == 1
-				saved.TailsWalk++
-				if saved.TailsWalk > 1
-					saved.TailsWalk = 0
-				end if
-			end if
-		break	
-		case 4 //Tails Run	public alias saveRAM[528] : saved.TailsRun
+		case 3 //Tails Run	public alias saveRAM[528] : saved.TailsRun
 			if inputPress.left == 1
 				saved.TailsRun--
 				if saved.TailsRun < 0
@@ -2104,7 +2090,7 @@ function ca22.tailsmenu
 				end if
 			end if
 		break	
-		case 5 //Tails Death	public alias saveRAM[528] : saved.TailsDeath
+		case 4 //Tails Death	public alias saveRAM[528] : saved.TailsDeath
 			if inputPress.left == 1
 				saved.TailsDeath--
 				if saved.TailsDeath < 0
@@ -2118,7 +2104,7 @@ function ca22.tailsmenu
 				end if
 			end if
 		break	
-		case 6 //Tails Drown	public alias saveRAM[528] : saved.TailsDeath
+		case 5 //Tails Drown	public alias saveRAM[528] : saved.TailsDeath
 			if inputPress.left == 1
 				saved.TailsDrown--
 				if saved.TailsDrown < 0
@@ -2132,7 +2118,7 @@ function ca22.tailsmenu
 				end if
 			end if
 		break	
-		case 7 //Tails Skid	public alias saveRAM[528] : saved.TailsDeath
+		case 6 //Tails Skid	public alias saveRAM[528] : saved.TailsDeath
 			if inputPress.left == 1
 				saved.TailsSkid--
 				if saved.TailsSkid < 0
@@ -2146,7 +2132,7 @@ function ca22.tailsmenu
 				end if
 			end if
 		break	
-		case 8 //Tails Endpose	public alias saveRAM[528] : saved.TailsDeath
+		case 7 //Tails Endpose	public alias saveRAM[528] : saved.TailsDeath
 			if inputPress.left == 1
 				saved.TailsEndingPose--
 				if saved.TailsEndingPose < 0
@@ -2160,7 +2146,7 @@ function ca22.tailsmenu
 				end if
 			end if
 		break	
-		case 9 //Tails signpost	public alias saveRAM[528] : saved.TailsDeath
+		case 8 //Tails signpost	public alias saveRAM[528] : saved.TailsDeath
 			if inputPress.left == 1
 				saved.TailsSignPost--
 				if saved.TailsSignPost < 0
@@ -5351,26 +5337,6 @@ function ca22.tailsdraw
 	text.ypos += 21
 	menu.line++	
 
-	//Tails Walk
-	text.xpos = text.margin
-	text.drawalign = TEXT_LEFT_ALIGN
-	text.drawline = 235
-	CallFunction(option.text)
-	
-	text.xpos = screen.xsize
-	text.xpos -= text.margin.right
-	text.drawalign = TEXT_CENTER_ALIGN
-	switch saved.TailsWalk
-	case 0
-		text.drawline = 41	//Sonic 2
-		break		
-	case 1
-		text.drawline = 59	//Sonic 1
-		break			
-	end switch
-	CallFunction(option.text)
-	text.ypos += 21
-	menu.line++	
 
 	//TailsRun
 	text.xpos = text.margin
